@@ -14,7 +14,7 @@
     <!-- nav -->
     <nav class="navbar navbar-expand-lg navbar_color">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" href="all.php">
                 <!-- (img)https://logo.com/dashboard -->
                 <img src="static/foodmap.png"  width="170" height="60">
             </a>
