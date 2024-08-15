@@ -1,0 +1,427 @@
+.navbar_color {
+    background-color: #4D7E3E!important; /* 替换为自定义颜色 */
+}
+.nav-item a{
+    color: black;
+}
+
+.nav-item :hover{
+    border-radius: 12px;
+    background-color: #3b6030;
+    transition: border-radius 0.3s, background-color 0.3s, font-size 0.3s; 
+}
+.nav-item .dropdown-menu {
+    background-color: white; 
+    border-radius:5px;
+}
+.nav-item:hover .dropdown-menu .dropdown-item {
+    background-color: white;
+    border-radius:0;
+}
+body{   
+    background-color: #192515!important;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+.search_button{
+    background-color:rgb(32, 114, 32);
+    color:white
+}
+footer{
+    border-radius: 0%;  
+    background-color:#4D7E3E;
+}
+.footer_container{
+    height: 500px;
+}
+.footer_title{
+    font-family:serif;
+    font-size:clamp(30px,5vw,60px);
+}
+.footer_bottom{
+    background-color:#2b4b22;
+    border-radius: 0%; 
+    height: 5vh;
+}
+textarea{
+    resize: none;
+}
+.btn2 {
+    position: relative;
+    min-width: 200px;
+    background: #333333;
+    border: 1px solid #333333;
+    color: #FFFFFF;
+    font-size: clamp(12px,3vw,16px);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+.btn2 span {
+    position: relative;
+    z-index: 100;
+}
+.btn2:before,
+.btn2:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.btn2:before {
+    transform: translate3d(-100%, 0, 0);
+    background-color: #FFFFFF;
+    transition: transform 300ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.btn2:after {
+    background-color: rgb(188, 185, 185);
+    transform: translate3d(100%, 0, 0);
+    transition: transform 300ms 300ms cubic-bezier(0.16, 0.73, 0.58, 0.62); 
+}
+.btn2:hover:before {
+    transform: translate3d(0, 0, 0);
+}
+.btn2:hover:after {
+    transform: translate3d(0, 0, 0);
+}
+.scroll::-webkit-scrollbar {              /* 網頁捲軸【寬度】 */
+    width: 10px;
+}
+.scroll::-webkit-scrollbar-track {              /* 網頁捲軸【背景】顏色 */
+    background:rgb(30, 30, 30);
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.scroll::-webkit-scrollbar-thumb {               /* 網頁捲軸【把手】顏色 */
+    background: rgb(188, 185, 185);
+    border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-thumb:hover {          /* 網頁捲軸【滑過時】把手的顏色 */  
+    background: rgb(188, 185, 185);
+    border-radius: 10px;
+}
+
+.scroll2::-webkit-scrollbar {              /* 網頁捲軸【寬度】 */
+    width: 10px;
+}
+.scroll2::-webkit-scrollbar-track {              /* 網頁捲軸【背景】顏色 */
+    background:rgb(30, 30, 30);
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+.scroll2::-webkit-scrollbar-thumb {               /* 網頁捲軸【把手】顏色 */
+    background: rgb(188, 185, 185);
+    border-radius: 10px;
+}
+.scroll2::-webkit-scrollbar-thumb:hover {          /* 網頁捲軸【滑過時】把手的顏色 */  
+    background: rgb(188, 185, 185);
+    border-radius: 10px;
+}
+
+.banner-container {
+    display: flex;
+    width: 100%;
+    height: 500px; /* 调整高度以适应需求 */
+
+}
+.banner {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+}
+.banner1 {
+    background-image: url('banner1.jpg'); /* 第一张图片 */
+    clip-path: polygon(0 0, 100% 0, calc(100% - 50px) 100%, 0 100%); /* 左边直角，右边斜切 */
+}
+.banner2 {
+    background-image: url('banner2.jpg'); /* 第二张图片 */
+    clip-path: polygon(50px 0, 100% 0, calc(100% - 50px) 100%, 0 100%); /* 左右两边都斜切 */
+}
+.banner3 {
+    background-image: url('banner3.jpg'); /* 第三张图片 */
+    clip-path: polygon(50px 0, 100% 0, 100% 100%, 0 100%); /* 左边斜切，右边直角 */
+}
+.content {
+    overflow-y: auto;
+    height: 1800px; /* Simulate long content for scrolling */
+    padding: 20px;
+}
+.content-dev{
+    height: 1000px; /* Simulate long content for scrolling */
+    padding: 20px;
+}
+.update_button{
+    display: none;
+}
+.dismiss_button{
+    display: none;
+}
+.text-slide {
+    position: relative;
+    opacity: 0; /* 初始透明度 */
+    left: -100px; /* 初始位置，稍微偏移到左边一点 */
+    transition: left 0.5s ease, opacity 0.5s ease;
+}
+.text-slide.visible {
+    left: 0; /* 最终位置 */
+    opacity: 1; /* 最终透明度 */
+}
+.text-slide2 {
+    position: absolute; /* 使用绝对定位 */
+    opacity: 0; /* 初始透明度 */
+    right: -50px; /* 初始位置，稍微偏移到右边 */
+    transition: right 0.5s ease, opacity 0.5s ease;
+    transition: left 0.5s ease, opacity 0.5s ease;
+}
+.text-slide2.visible {
+    right:10%; /* 结束位置为页面的正中央 */
+    opacity: 1; /* 最终透明度 */
+}
+
+
+.text-slide-icon{
+    margin-top: 150px;
+}
+.text-slide-title{
+    color: white;
+    font-size: 50px;
+    margin-top: 120px;
+    margin-left: 50px;
+}
+.text-slide-title2{
+    color: white;
+    font-size: 50px;
+    margin-top: 230px;
+    text-align: center;
+}
+.text-slide-content{
+    color: white;
+    font-size: 20px;
+    margin-left: 50px;
+}
+.text-slide-content-title{
+    color: white;
+    font-size: 16px;
+}
+.content1{
+    margin-top: 100px;
+}
+.content2{
+    margin-top: 100px;
+}
+.content3{
+    margin-top: 100px;
+}
+.toTop {
+    background: rgba(70, 200, 90, 0.7);
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 26px;
+}
+.toTop:hover {
+    color: #fff;
+    text-decoration: none;
+    background: rgba(42, 115, 53, 0.7);
+}
+.navbar-toggler {
+    background-color:#3b6030; /* 按鈕背景顏色 */
+}
+
+.navbar-toggler-icon {
+    background-image: none; /* 去掉預設圖標背景 */
+}
+
+/* 自訂圖標顏色 */
+.navbar-toggler-icon::before {
+    content: '\2630'; /* 自訂圖標字符或使用其他符號 */
+    color: #FFFFFF; /* 圖標顏色 */
+    font-size: 24px; /* 調整圖標大小 */
+}
+.font-weight{
+    font-weight: bold;
+}
+
+
+.image-container{
+    margin-left: 160px;
+}
+.image-container img {
+    max-width: 100%; /* 图片宽度不超过容器宽度 */
+    max-height: 100%; /* 图片高度不超过容器高度 */
+    height: auto; /* 高度自动调整以保持比例 */
+    width: auto; /* 自动调整宽度以保持比例 */
+    display: block; /* 去掉图片下方的间距 */
+}
+.card-title{
+    font-weight: bold;
+    color: #DC3545;
+}
+.card-body{
+    color: #FFFFFF;
+    background-color: #121b10;
+}
+.input-form-control{
+    color: white;
+    caret-color: white; 
+}
+.input-form-control:focus {
+    color: white; /* 焦点时文字颜色仍为白色 */
+    caret-color: white; /* 焦点时光标颜色仍为白色 */
+    outline: none; /* 去除默认的焦点样式，如果你不想要蓝色边框 */
+}
+.insert-title{
+    color: white;
+    text-align: center;
+}
+.exampleModal_edit{
+    background-color: #121b10;
+    color: white;
+    border: 1px solid#FFFFFF;
+}
+.password_title{
+    color:white;
+}
+.modal {
+    backdrop-filter: blur(1px); /* Lighter blur effect */
+}
+
+.form2{
+    display: none;
+}
+#map {
+    height: 500px; /* 设置地图容器的高度 */
+    width: 100%; /* 设置地图容器的宽度 */
+}
+#locate-btn {
+    position: absolute;
+    bottom: 110px;
+    right: 45%;
+    padding: 10px;
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 10000; 
+
+}
+
+@media (max-width: 992px) {
+    .nav-item a {
+        text-align: center; /* 文本居中对齐 */
+    }
+    .nav-item:hover .dropdown-menu .dropdown-item {
+        background-color: #4D7E3E;
+    }
+    .nav-item .dropdown-menu {
+        background-color:#4D7E3E;
+        border: none;
+    }
+    .search_button{
+        margin-bottom: 10px;
+    }
+    .banner-container {
+        height: 350px; /* Adjust the height for smaller screens */
+    }
+    .banner {
+        background-size: cover; /* Ensure images fit within the container without cropping */
+        background-position: center;
+    }
+    .banner1 {
+        clip-path: polygon(0 0, 100% 0, calc(100% - 40px) 100%, 0 100%); /* 左边直角，右边斜切 */
+    }
+    .banner2 {
+        clip-path: polygon(40px 0, 100% 0, calc(100% - 40px) 100%, 0 100%); /* 左右两边都斜切 */
+    }
+    .banner3 {
+        clip-path: polygon(40px 0, 100% 0, 100% 100%, 0 100%); /* 左边斜切，右边直角 */
+    }
+}
+@media (max-width: 768px) {
+    .banner-container {
+        height: 300px; /* Adjust the height for smaller screens */
+    }
+    .banner {
+        background-size: cover; /* Ensure images fit within the container without cropping */
+        background-position: center;
+    }
+    .banner1 {
+        clip-path: polygon(0 0, 100% 0, calc(100% - 30px) 100%, 0 100%); /* 左边直角，右边斜切 */
+    }
+    .banner2 {
+        clip-path: polygon(30px 0, 100% 0, calc(100% - 30px) 100%, 0 100%); /* 左右两边都斜切 */
+    }
+    .banner3 {
+        clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%); /* 左边斜切，右边直角 */
+    }
+}
+@media (max-width: 576px) {
+    body {
+        font-size: 14px;
+    }
+    .btn2 span{
+        font-size: 14px; 
+    }
+    .btn2 {
+        min-width: 150px;
+    }
+    .search_button {
+        font-size: 14px; 
+        margin-top: 2px;
+    }
+    .form-control::placeholder {
+        font-size: 14px; 
+    }
+    .footer_title{
+        text-align: center;
+    }
+    .footer_container{
+        height: 700px;
+    }
+    .banner1 {
+        clip-path: polygon(0 0, 100% 0, calc(100% - 0px) 100%, 0 100%); /* 左边直角，右边斜切 */
+    }
+    .banner2 {
+        clip-path: polygon(0px 0, 100% 0, calc(100% - 0px) 100%, 0 100%); /* 左右两边都斜切 */
+    }
+    .banner3 {
+        clip-path: polygon(0px 0, 100% 0, 100% 100%, 0 100%); /* 左边斜切，右边直角 */
+    }
+    .text-slide-title{
+        font-size: 40px;
+        margin-top: 80px;
+        margin-left: 0px;
+    }
+    .text-slide-content{
+        font-size: 16px;
+        margin-left: 0px;
+    }
+    .text-slide img{
+        width: 50px;
+        height: 50px;
+    }
+    .image-container{
+        margin-left: 60px;
+    }
+    .text-slide-title2{
+        font-size: 40px;
+    }
+    .content {
+        height: 1200px;
+
+    }
+    #locate-btn {
+        right: 40%;
+    }
+}
