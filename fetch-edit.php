@@ -1,12 +1,11 @@
 <?php
-    $servername = "172.17.0.2";
+    $servername = "localhost";
     $username = "root";
     $password = "howard900";
     $dbname = "mydb";
-    $port = "3306";
 
     // 创建连接
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password);
 
     // 检查连接
     if ($conn->connect_error) {
