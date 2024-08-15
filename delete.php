@@ -1,5 +1,5 @@
 <?php
-    $servername = "localhost"; // 通常為 'localhost'
+    $servername = "popalz.net"; // 通常為 'localhost'
     $username = "root"; // 你的 MySQL 使用者名稱
     $password = "howard900"; // 你的 MySQL 密碼
     $dbname = "mydb"; // 資料庫名稱
