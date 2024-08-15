@@ -6,7 +6,7 @@
     $port = "3309";
 
     // 创建连接
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname, $port);
 
     // 检查连接
     if ($conn->connect_error) {
