@@ -3,7 +3,7 @@
     $username = "root";
     $password = "howard900";
     $dbname = "mydb";
-    $port = "3309";
+    $port = "3311";
 
     // 建立連線
     $conn = new mysqli($servername, $username, $password, $dbname, $port);
