@@ -1,8 +1,9 @@
 <?php
-    $servername = "localhost"; // 通常為 'localhost'
-    $username = "root"; // 你的 MySQL 使用者名稱
-    $password = "howard900"; // 你的 MySQL 密碼
-    $dbname = "mydb"; // 將資料庫名稱改為 'mydb'
+    $servername = "127.0.0.1";
+    $username = "root";
+    $password = "howard900";
+    $dbname = "mydb";
+    $port = "3309";
 
     // 建立連線
     $conn = new mysqli($servername, $username, $password, $dbname);

@@ -1,8 +1,9 @@
 <?php
-    $servername = "localhost"; // 通常为 'localhost'
-    $username = "root"; // 你的 MySQL 使用者名称
-    $password = "howard900"; // 你的 MySQL 密码
-    $dbname = "mydb"; // 数据库名称
+    $servername = "127.0.0.1";
+    $username = "root";
+    $password = "howard900";
+    $dbname = "mydb";
+    $port = "3309";
 
     // 创建连接
     $conn = new mysqli($servername, $username, $password, $dbname);
