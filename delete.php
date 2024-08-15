@@ -3,10 +3,10 @@
     $username = "root";
     $password = "howard900";
     $dbname = "mydb";
-
+    $port = "3311";
 
     // 建立連線
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname, $port);
 
     // 檢查連線
     if ($conn->connect_error) {
