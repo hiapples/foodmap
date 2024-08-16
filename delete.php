@@ -1,8 +1,9 @@
 <?php
-    $servername = "fdb1028.awardspace.net";
-    $username = "4517966_mydb";
+    $servername = "localhost";
+    $username = "root";
     $password = "howard900";
-    $dbname = "4517966_mydb";
+    $dbname = "mydb";
+
 
 
     // 建立連線

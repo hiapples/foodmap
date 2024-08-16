@@ -1,12 +1,12 @@
 <?php
-    $servername = "fdb1028.awardspace.net";
-    $username = "4517966_mydb";
+    $servername = "localhost";
+    $username = "root";
     $password = "howard900";
-    $dbname = "4517966_mydb";
+    $dbname = "mydb";
 
 
     // 创建连接
-    $conn = new mysqli($servername, $username, $password);
+    $conn = new mysqli($servername, $username, $password,$dbname);
 
     // 检查连接
     if ($conn->connect_error) {
