@@ -303,8 +303,8 @@ textarea{
     height: 500px; /* 设置地图容器的高度 */
     width: 100%; /* 设置地图容器的宽度 */
 }
+
 #locate-btn {
-    position: absolute;
     bottom: 110px;
     right: 45%;
     padding: 10px;
@@ -314,7 +314,6 @@ textarea{
     border-radius: 5px;
     cursor: pointer;
     z-index: 10000; 
-
 }
 
 @media (max-width: 992px) {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>foodmap</title>
+    <link rel="icon" href="static/hamburger.png" type="image/x-icon" />
     <link rel='apple-touch-icon' href='static/hamburger.png'>
     <!-- bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +58,9 @@
     <!-- content -->
     <div class="container content mt-3">
         <div id="map"></div>
-        <button id="locate-btn">當前位置</button>
+        <div class="d-flex justify-content-center">
+            <button id="locate-btn">當前位置</button>
+        </div>
     </div>
 
     <!-- footer -->
