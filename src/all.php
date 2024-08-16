@@ -248,18 +248,15 @@
                         return true; // 全天营业
                     }
 
-                    // 处理跨天情况，例如 23:00 - 02:00
+                    // 处理跨天情况，例如 17:00 - 00:00
                     if (endTimeInMinutes < startTimeInMinutes) {
-                        // 跨天，检查前后两天的营业时间
-                        const nextDay = (dayOfWeek + 1) % 7;
-                        const previousDay = (dayOfWeek - 1 + 7) % 7;
-
-                        // Check today
-                        if (currentTimeInMinutes >= startTimeInMinutes || currentTimeInMinutes < endTimeInMinutes + 24 * 60) {
+                        // 跨天时间段
+                        if (currentTimeInMinutes >= startTimeInMinutes || currentTimeInMinutes < 24 * 60) {
                             return true;
                         }
 
-                        // Check next day
+                        // 处理第二天的时间段
+                        const nextDay = (dayOfWeek + 1) % 7;
                         const nextDaySlots = getTimeSlotsForDay(nextDay, item);
                         for (const nextDaySlot of nextDaySlots) {
                             const [nextDayStartHour, nextDayStartMinute] = nextDaySlot.start.split(':').map(Number);
@@ -267,30 +264,12 @@
                             let nextDayStartTimeInMinutes = nextDayStartHour * 60 + nextDayStartMinute;
                             let nextDayEndTimeInMinutes = nextDayEndHour * 60 + nextDayEndMinute;
 
-                            // 处理跨天情况
+                            // 处理第二天的时间段
                             if (nextDayEndTimeInMinutes < nextDayStartTimeInMinutes) {
                                 nextDayEndTimeInMinutes += 24 * 60;
                             }
 
                             if (currentTimeInMinutes < nextDayEndTimeInMinutes) {
-                                return true;
-                            }
-                        }
-
-                        // Check previous day
-                        const previousDaySlots = getTimeSlotsForDay(previousDay, item);
-                        for (const prevDaySlot of previousDaySlots) {
-                            const [prevDayStartHour, prevDayStartMinute] = prevDaySlot.start.split(':').map(Number);
-                            let [prevDayEndHour, prevDayEndMinute] = prevDaySlot.end.split(':').map(Number);
-                            let prevDayStartTimeInMinutes = prevDayStartHour * 60 + prevDayStartMinute;
-                            let prevDayEndTimeInMinutes = prevDayEndHour * 60 + prevDayEndMinute;
-
-                            // 处理跨天情况
-                            if (prevDayEndTimeInMinutes < prevDayStartTimeInMinutes) {
-                                prevDayEndTimeInMinutes += 24 * 60;
-                            }
-
-                            if (currentTimeInMinutes >= prevDayStartTimeInMinutes && currentTimeInMinutes < prevDayEndTimeInMinutes) {
                                 return true;
                             }
                         }
