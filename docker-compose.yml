@@ -5,7 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: howard900
     ports:
-      - "3311:3306"
+      - "3311:3306" # 这个映射仅用于从宿主机访问 MySQL 容器
 
   app:
     build:

@@ -1,5 +1,5 @@
 <?php
-    $servername = "localhost";
+    $servername = "mysql"; // 使用 Docker Compose 中的服务名称
     $username = "root";
     $password = "howard900";
     $dbname = "mydb";
