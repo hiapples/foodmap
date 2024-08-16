@@ -58,7 +58,7 @@
     <!-- content -->
     <div class="container content mt-3">
         <div id="map"></div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-5">
             <button id="locate-btn">當前位置</button>
         </div>
     </div>
