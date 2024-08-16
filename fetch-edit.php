@@ -1,8 +1,8 @@
 <?php
-    $servername = "mysql"; // 使用 Docker Compose 中的服务名称
-    $username = "root";
-    $password = "howard900";
-    $dbname = "mydb";
+    $servername = "sql110.infinityfree.com";
+    $username = "if0_37115370";
+    $password = "howard900116";
+    $dbname = "if0_37115370_mydb";
 
     // 创建连接
     $conn = new mysqli($servername, $username, $password);
