@@ -1,8 +1,9 @@
 <?php
-    $servername = "sql110.infinityfree.com";
-    $username = "if0_37115370";
-    $password = "howard900116";
-    $dbname = "if0_37115370_mydb";
+    $servername = "fdb1028.awardspace.net";
+    $username = "4517966_mydb";
+    $password = "howard900";
+    $dbname = "4517966_mydb";
+
 
     // 创建连接
     $conn = new mysqli($servername, $username, $password, $dbname);
