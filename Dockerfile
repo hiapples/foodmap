@@ -1,15 +1,18 @@
-# 使用官方 PHP 镜像作为基础镜像
+# 使用官方 PHP 與 Apache 組合的基礎映像
 FROM php:7.4-apache
 
-# 复制应用程序代码到容器内的 /var/www/html 目录
+# 複製應用代碼到容器內的 /var/www/html 目錄
 COPY ./src /var/www/html
 
-# 安装 PHP 扩展和 Apache 模块
-RUN docker-php-ext-install mysqli \
-    && a2enmod rewrite
+# 安裝 MySQLi PHP 擴展
+RUN docker-php-ext-install mysqli
 
-# 设置工作目录
+# 啟用 Apache 的 mod_rewrite 模組
+RUN a2enmod rewrite
+
+# 設置工作目錄
 WORKDIR /var/www/html
 
-# 公开 80 端口
+# 曝露 80 端口
 EXPOSE 80
+

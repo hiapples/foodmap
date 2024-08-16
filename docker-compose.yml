@@ -10,6 +10,10 @@ services:
       - ./src:/var/www/html
     environment:
       DB_HOST: sql12.freesqldatabase.com
+      DB_PORT: 3306
       DB_USER: sql12726340
       DB_PASSWORD: NYYVTRlGwk
       DB_NAME: sql12726340
+
+volumes:
+  db_data:
