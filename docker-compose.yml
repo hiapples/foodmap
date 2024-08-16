@@ -9,8 +9,7 @@ services:
     volumes:
       - ./src:/var/www/html
     environment:
-      DB_HOST: mysql-ggxt.render.com
-      DB_PORT: 3306
-      DB_USER: mydb
-      DB_PASSWORD: howard900
-      DB_NAME: mydb
+      DB_HOST: sql12.freesqldatabase.com
+      DB_USER: sql12726340
+      DB_PASSWORD: NYYVTRlGwk
+      DB_NAME: sql12726340
