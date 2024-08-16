@@ -1,8 +1,8 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "howard900";
-    $dbname = "mydb";
+    $servername = "sql110.infinityfree.com";
+    $username = "if0_37115370";
+    $password = "howard900116";
+    $dbname = "if0_37115370_mydb";
 
 
     // 创建连接
