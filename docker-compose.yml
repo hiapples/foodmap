@@ -9,7 +9,7 @@ services:
     volumes:
       - ./src:/var/www/html
     environment:
-      DB_HOST: mysql-ggxt
+      DB_HOST: mysql-ggxt.render.com
       DB_PORT: 3306
       DB_USER: mydb
       DB_PASSWORD: howard900
