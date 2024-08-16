@@ -1,8 +1,8 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "howard900";
-    $dbname = "mydb";
+    $servername = "db"; // 使用 Docker Compose 中的服務名稱
+    $username = "mydb"; // 使用 docker-compose.yml 中配置的 MYSQL_USER
+    $password = "howard900"; // 使用 docker-compose.yml 中配置的 MYSQL_PASSWORD
+    $dbname = "mydb"; // 使用 docker-compose.yml 中配置的 MYSQL_DATABASE
 
 
 
