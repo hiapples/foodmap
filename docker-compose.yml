@@ -20,7 +20,7 @@ services:
       MYSQL_USER: mydb
       MYSQL_PASSWORD: howard900
     ports:
-      - "3306:3306"
+      - "3311:3306"
     volumes:
       - db_data:/var/lib/mysql
 
