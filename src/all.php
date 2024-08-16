@@ -184,13 +184,13 @@
 
             data.forEach(item => {
                 const id = item.id; // 获取每个项的唯一id
-
+                const titleId = `card-title-${id}`; // 为每个title设置唯一的id
                 // 构建HTML内容
                 all += 
                 "<div class='col-md-4'>"+
                     "<div class='card mt-3'>"+
                         "<div class='card-body'>"+
-                            "<h5 class='card-title'>"+ item.card_title+"</h5>"+
+                            "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
                             "<div class='card-text'>"+
                                 "<span>"+
                                     // 星期一
@@ -223,7 +223,95 @@
 
             // 更新HTML内容
             allHTML.innerHTML = all;
+            //判斷是否營業
+            function isOpen(item) {
+                const now = new Date();
+                const currentHour = now.getHours();
+                const currentMinute = now.getMinutes();
+                const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
+                const dayOfWeek = now.getDay(); // 0 是星期日, 1 是星期一, 以此类推
+                let timeSlots = [];
+
+                // 根据星期几获取不同的营业时间段
+                switch(dayOfWeek) {
+                    case 0: // 星期日
+                        timeSlots = [
+                            { start: item.card_7_1, end: item.card_7_2 },
+                            { start: item.card_7_3, end: item.card_7_4 }
+                        ];
+                        break;
+                    case 1: // 星期一
+                        timeSlots = [
+                            { start: item.card_1_1, end: item.card_1_2 },
+                            { start: item.card_1_3, end: item.card_1_4 }
+                        ];
+                        break;
+                    case 2: // 星期二
+                        timeSlots = [
+                            { start: item.card_2_1, end: item.card_2_2 },
+                            { start: item.card_2_3, end: item.card_2_4 }
+                        ];
+                        break;
+                    case 3: // 星期三
+                        timeSlots = [
+                            { start: item.card_3_1, end: item.card_3_2 },
+                            { start: item.card_3_3, end: item.card_3_4 }
+                        ];
+                        break;
+                    case 4: // 星期四
+                        timeSlots = [
+                            { start: item.card_4_1, end: item.card_4_2 },
+                            { start: item.card_4_3, end: item.card_4_4 }
+                        ];
+                        break;
+                    case 5: // 星期五
+                        timeSlots = [
+                            { start: item.card_5_1, end: item.card_5_2 },
+                            { start: item.card_5_3, end: item.card_5_4 }
+                        ];
+                        break;
+                    case 6: // 星期六
+                        timeSlots = [
+                            { start: item.card_6_1, end: item.card_6_2 },
+                            { start: item.card_6_3, end: item.card_6_4 }
+                        ];
+                        break;
+                    default:
+                        return false;
+                }
+
+                // 检查是否当前时间在任意一个时间段内
+                for (const slot of timeSlots) {
+                    if (!slot.start || !slot.end) continue;
+
+                    const [startHour, startMinute] = slot.start.split(':').map(Number);
+                    let [endHour, endMinute] = slot.end.split(':').map(Number);
+
+                    // 处理跨天情况，例如 19:00 - 01:00
+                    if (endHour < startHour || (endHour === startHour && endMinute < startMinute)) {
+                        endHour += 24;
+                    }
+
+                    const startTimeInMinutes = startHour * 60 + startMinute;
+                    const endTimeInMinutes = endHour * 60 + endMinute;
+
+                    if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
+                        return true; // 当前时间在此时间段内
+                    }
+                }
+
+                return false; // 当前时间不在任何营业时间段内
+            }
+            // 更新每个title的颜色
+            data.forEach(item => {
+                const titleElement = document.getElementById(`card-title-${item.id}`);
+                if (isOpen(item)) {
+                    if (titleElement) {
+                        titleElement.style.color = 'green';
+                    }
+                } 
+            });
             // 根据内容更新每个dash的可见性
             data.forEach(item => {
                 for (let day = 1; day <= 7; day++) {
@@ -252,7 +340,7 @@
         })
         .catch(error => console.error('获取数据时出错:', error));
 
- 
+
         //delete
         function get_delete_id(element){
             const id = element.id;
