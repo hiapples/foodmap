@@ -231,55 +231,7 @@
                 const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
                 const dayOfWeek = now.getDay(); // 0 是星期日, 1 是星期一, 以此类推
-                let timeSlots = [];
-
-                // 根据星期几获取不同的营业时间段
-                switch(dayOfWeek) {
-                    case 0: // 星期日
-                        timeSlots = [
-                            { start: item.card_7_1, end: item.card_7_2 },
-                            { start: item.card_7_3, end: item.card_7_4 }
-                        ];
-                        break;
-                    case 1: // 星期一
-                        timeSlots = [
-                            { start: item.card_1_1, end: item.card_1_2 },
-                            { start: item.card_1_3, end: item.card_1_4 }
-                        ];
-                        break;
-                    case 2: // 星期二
-                        timeSlots = [
-                            { start: item.card_2_1, end: item.card_2_2 },
-                            { start: item.card_2_3, end: item.card_2_4 }
-                        ];
-                        break;
-                    case 3: // 星期三
-                        timeSlots = [
-                            { start: item.card_3_1, end: item.card_3_2 },
-                            { start: item.card_3_3, end: item.card_3_4 }
-                        ];
-                        break;
-                    case 4: // 星期四
-                        timeSlots = [
-                            { start: item.card_4_1, end: item.card_4_2 },
-                            { start: item.card_4_3, end: item.card_4_4 }
-                        ];
-                        break;
-                    case 5: // 星期五
-                        timeSlots = [
-                            { start: item.card_5_1, end: item.card_5_2 },
-                            { start: item.card_5_3, end: item.card_5_4 }
-                        ];
-                        break;
-                    case 6: // 星期六
-                        timeSlots = [
-                            { start: item.card_6_1, end: item.card_6_2 },
-                            { start: item.card_6_3, end: item.card_6_4 }
-                        ];
-                        break;
-                    default:
-                        return false;
-                }
+                const timeSlots = getTimeSlotsForDay(dayOfWeek, item);
 
                 // 检查是否当前时间在任意一个时间段内
                 for (const slot of timeSlots) {
@@ -288,21 +240,113 @@
                     const [startHour, startMinute] = slot.start.split(':').map(Number);
                     let [endHour, endMinute] = slot.end.split(':').map(Number);
 
-                    // 处理跨天情况，例如 19:00 - 01:00
-                    if (endHour < startHour || (endHour === startHour && endMinute < startMinute)) {
-                        endHour += 24;
+                    let startTimeInMinutes = startHour * 60 + startMinute;
+                    let endTimeInMinutes = endHour * 60 + endMinute;
+
+                    // 处理全天营业的情况
+                    if (startTimeInMinutes === 0 && endTimeInMinutes === 0) {
+                        return true; // 全天营业
                     }
 
-                    const startTimeInMinutes = startHour * 60 + startMinute;
-                    const endTimeInMinutes = endHour * 60 + endMinute;
+                    // 处理跨天情况，例如 23:00 - 02:00
+                    if (endTimeInMinutes < startTimeInMinutes) {
+                        // 跨天，检查前后两天的营业时间
+                        const nextDay = (dayOfWeek + 1) % 7;
+                        const previousDay = (dayOfWeek - 1 + 7) % 7;
 
-                    if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
-                        return true; // 当前时间在此时间段内
+                        // Check today
+                        if (currentTimeInMinutes >= startTimeInMinutes || currentTimeInMinutes < endTimeInMinutes + 24 * 60) {
+                            return true;
+                        }
+
+                        // Check next day
+                        const nextDaySlots = getTimeSlotsForDay(nextDay, item);
+                        for (const nextDaySlot of nextDaySlots) {
+                            const [nextDayStartHour, nextDayStartMinute] = nextDaySlot.start.split(':').map(Number);
+                            let [nextDayEndHour, nextDayEndMinute] = nextDaySlot.end.split(':').map(Number);
+                            let nextDayStartTimeInMinutes = nextDayStartHour * 60 + nextDayStartMinute;
+                            let nextDayEndTimeInMinutes = nextDayEndHour * 60 + nextDayEndMinute;
+
+                            // 处理跨天情况
+                            if (nextDayEndTimeInMinutes < nextDayStartTimeInMinutes) {
+                                nextDayEndTimeInMinutes += 24 * 60;
+                            }
+
+                            if (currentTimeInMinutes < nextDayEndTimeInMinutes) {
+                                return true;
+                            }
+                        }
+
+                        // Check previous day
+                        const previousDaySlots = getTimeSlotsForDay(previousDay, item);
+                        for (const prevDaySlot of previousDaySlots) {
+                            const [prevDayStartHour, prevDayStartMinute] = prevDaySlot.start.split(':').map(Number);
+                            let [prevDayEndHour, prevDayEndMinute] = prevDaySlot.end.split(':').map(Number);
+                            let prevDayStartTimeInMinutes = prevDayStartHour * 60 + prevDayStartMinute;
+                            let prevDayEndTimeInMinutes = prevDayEndHour * 60 + prevDayEndMinute;
+
+                            // 处理跨天情况
+                            if (prevDayEndTimeInMinutes < prevDayStartTimeInMinutes) {
+                                prevDayEndTimeInMinutes += 24 * 60;
+                            }
+
+                            if (currentTimeInMinutes >= prevDayStartTimeInMinutes && currentTimeInMinutes < prevDayEndTimeInMinutes) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        // 如果时间段不跨天，只需判断当前时间是否在此时间段内
+                        if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
+                            return true;
+                        }
                     }
                 }
 
                 return false; // 当前时间不在任何营业时间段内
             }
+
+            function getTimeSlotsForDay(dayOfWeek, item) {
+                switch(dayOfWeek) {
+                    case 0: // 星期日
+                        return [
+                            { start: item.card_7_1, end: item.card_7_2 },
+                            { start: item.card_7_3, end: item.card_7_4 }
+                        ];
+                    case 1: // 星期一
+                        return [
+                            { start: item.card_1_1, end: item.card_1_2 },
+                            { start: item.card_1_3, end: item.card_1_4 }
+                        ];
+                    case 2: // 星期二
+                        return [
+                            { start: item.card_2_1, end: item.card_2_2 },
+                            { start: item.card_2_3, end: item.card_2_4 }
+                        ];
+                    case 3: // 星期三
+                        return [
+                            { start: item.card_3_1, end: item.card_3_2 },
+                            { start: item.card_3_3, end: item.card_3_4 }
+                        ];
+                    case 4: // 星期四
+                        return [
+                            { start: item.card_4_1, end: item.card_4_2 },
+                            { start: item.card_4_3, end: item.card_4_4 }
+                        ];
+                    case 5: // 星期五
+                        return [
+                            { start: item.card_5_1, end: item.card_5_2 },
+                            { start: item.card_5_3, end: item.card_5_4 }
+                        ];
+                    case 6: // 星期六
+                        return [
+                            { start: item.card_6_1, end: item.card_6_2 },
+                            { start: item.card_6_3, end: item.card_6_4 }
+                        ];
+                    default:
+                        return [];
+                }
+            }
+
             // 更新每个title的颜色
             data.forEach(item => {
                 const titleElement = document.getElementById(`card-title-${item.id}`);
