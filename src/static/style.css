@@ -315,7 +315,9 @@ textarea{
     cursor: pointer;
     z-index: 10000; 
 }
-
+.week{
+    font-size: 12px;
+}
 @media (max-width: 992px) {
     .nav-item a {
         text-align: center; /* 文本居中对齐 */

@@ -19,18 +19,32 @@
         card_title VARCHAR(255) NOT NULL,
         card_1_1 VARCHAR(255),
         card_1_2 VARCHAR(255),
+        card_1_3 VARCHAR(255),
+        card_1_4 VARCHAR(255),
         card_2_1 VARCHAR(255),
         card_2_2 VARCHAR(255),
+        card_2_3 VARCHAR(255),
+        card_2_4 VARCHAR(255),
         card_3_1 VARCHAR(255),
         card_3_2 VARCHAR(255),
+        card_3_3 VARCHAR(255),
+        card_3_4 VARCHAR(255),
         card_4_1 VARCHAR(255),
         card_4_2 VARCHAR(255),
+        card_4_3 VARCHAR(255),
+        card_4_4 VARCHAR(255),
         card_5_1 VARCHAR(255),
         card_5_2 VARCHAR(255),
+        card_5_3 VARCHAR(255),
+        card_5_4 VARCHAR(255),
         card_6_1 VARCHAR(255),
         card_6_2 VARCHAR(255),
+        card_6_3 VARCHAR(255),
+        card_6_4 VARCHAR(255),
         card_7_1 VARCHAR(255),
         card_7_2 VARCHAR(255),
+        card_7_3 VARCHAR(255),
+        card_7_4 VARCHAR(255),
         card_class VARCHAR(255),
         card_address VARCHAR(255),
         card_link VARCHAR(1000),
@@ -44,16 +58,33 @@
     }
 
     // 準備 SQL 語句並綁定參數
-    $stmt = $conn->prepare("INSERT INTO shop_info (card_title, card_1_1, card_1_2, card_2_1, card_2_2, card_3_1, card_3_2, card_4_1, card_4_2, card_5_1, card_5_2, card_6_1, card_6_2, card_7_1, card_7_2, card_class, card_address, card_link, card_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO shop_info (
+    card_title, 
+    card_1_1, card_1_2, card_1_3, card_1_4,
+    card_2_1, card_2_2, card_2_3, card_2_4,
+    card_3_1, card_3_2, card_3_3, card_3_4,
+    card_4_1, card_4_2, card_4_3, card_4_4,
+    card_5_1, card_5_2, card_5_3, card_5_4,
+    card_6_1, card_6_2, card_6_3, card_6_4,
+    card_7_1, card_7_2, card_7_3, card_7_4,
+    card_class, 
+    card_address, 
+    card_link, 
+    card_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     if ($stmt === false) {
         die("Prepare failed: " . $conn->error);
     }
 
-    $stmt->bind_param("sssssssssssssssssss", 
-        $card_title, $card_1_1, $card_1_2, $card_2_1, $card_2_2, 
-        $card_3_1, $card_3_2, $card_4_1, $card_4_2, $card_5_1, 
-        $card_5_2, $card_6_1, $card_6_2, $card_7_1, $card_7_2, 
+    $stmt->bind_param("sssssssssssssssssssssssssssssssss", 
+        $card_title, 
+        $card_1_1, $card_1_2,$card_1_3, $card_1_4,
+        $card_2_1, $card_2_2,$card_2_3, $card_2_4,
+        $card_3_1, $card_3_2,$card_3_3, $card_3_4,
+        $card_4_1, $card_4_2,$card_4_3, $card_4_4,
+        $card_5_1, $card_5_2,$card_5_3, $card_5_4,
+        $card_6_1, $card_6_2,$card_6_3, $card_6_4,
+        $card_7_1, $card_7_2,$card_7_3, $card_7_4,
         $card_class, $card_address, $card_link, $card_message
     );
 
@@ -61,18 +92,39 @@
     $card_title = $_POST['card-title'];
     $card_1_1 = $_POST['card-1-1'];
     $card_1_2 = $_POST['card-1-2'];
+    $card_1_3 = $_POST['card-1-3'];
+    $card_1_4 = $_POST['card-1-4'];
+
     $card_2_1 = $_POST['card-2-1'];
     $card_2_2 = $_POST['card-2-2'];
+    $card_2_3 = $_POST['card-2-3'];
+    $card_2_4 = $_POST['card-2-4'];
+
     $card_3_1 = $_POST['card-3-1'];
     $card_3_2 = $_POST['card-3-2'];
+    $card_3_3 = $_POST['card-3-3'];
+    $card_3_4 = $_POST['card-3-4'];
+
     $card_4_1 = $_POST['card-4-1'];
     $card_4_2 = $_POST['card-4-2'];
+    $card_4_3 = $_POST['card-4-3'];
+    $card_4_4 = $_POST['card-4-4'];
+
     $card_5_1 = $_POST['card-5-1'];
-    $card_5_2 = $_POST['card-5-2'];
+    $card_5_2 = $_POST['card-5-2'];   
+    $card_5_3 = $_POST['card-5-3'];
+    $card_5_4 = $_POST['card-5-4'];
+
     $card_6_1 = $_POST['card-6-1'];
     $card_6_2 = $_POST['card-6-2'];
+    $card_6_3 = $_POST['card-6-3'];
+    $card_6_4 = $_POST['card-6-4'];
+
     $card_7_1 = $_POST['card-7-1'];
     $card_7_2 = $_POST['card-7-2'];
+    $card_7_3 = $_POST['card-7-3'];
+    $card_7_4 = $_POST['card-7-4'];
+
     $card_class = $_POST['card-class'];
     $card_address = $_POST['card-address'];
     $card_link = $_POST['card-link'];
