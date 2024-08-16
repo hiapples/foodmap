@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    image: php:7.4-apache
+    build: .
     container_name: php_web
     ports:
       - "80:80"
