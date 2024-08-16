@@ -1,25 +1,14 @@
-# 使用官方的 Python 基礎映像
-FROM python:3.9-slim
+# 使用官方的 PHP 7.4 基礎映像
+FROM php:7.4-apache
 
-# 設定工作目錄
-WORKDIR /app
-
-# 複製要求檔到容器中
-COPY requirements.txt .
-
-# 安裝 Python 依賴
-RUN pip install --no-cache-dir -r requirements.txt
+# 安裝 PHP 擴展
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 # 複製應用程序文件到容器中
-COPY . .
+COPY src/ /var/www/html/
 
-# 設定環境變量
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=3000
+# 設置工作目錄
+WORKDIR /var/www/html
 
-# 暴露容器端口
-EXPOSE 3000
-
-# 啟動應用程序
-CMD ["flask", "run"]
+# 開放 80 端口
+EXPOSE 80
