@@ -1,8 +1,8 @@
 <?php
-    $servername = getenv('DB_HOST');
-    $username = getenv('DB_USER');
-    $password = getenv('DB_PASSWORD');
-    $dbname = getenv('DB_NAME');
+    $servername = "sql12.freesqldatabase.com"; 
+    $username = "sql12726340"; 
+    $password = "NYYVTRlGwk"; 
+    $dbname = "sql12726340"; 
 
     // 创建连接
     $conn = new mysqli($servername, $username, $password,$dbname);
