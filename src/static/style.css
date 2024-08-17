@@ -153,6 +153,9 @@ textarea{
     height: 1800px; 
     padding: 20px;
 }
+.noscroll{
+    overflow-y:hidden;
+}
 .content-dev{
     height: 1000px; /* Simulate long content for scrolling */
     padding: 20px;

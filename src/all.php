@@ -56,7 +56,7 @@
         </div>
     </nav>
     <!-- content -->
-    <div class="container  scroll2 mt-3 mb-5">
+    <div class="container noscroll mt-3 mb-5">
         <div class="row " id="all">
             
         </div>
