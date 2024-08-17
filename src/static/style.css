@@ -150,7 +150,7 @@ textarea{
 }
 .content {
     overflow-y: auto;
-    max-height: 800px;
+    height: 1800px; 
     padding: 20px;
 }
 .content-dev{
