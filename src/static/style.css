@@ -150,7 +150,7 @@ textarea{
 }
 .content {
     overflow-y: auto;
-    height: 1800px; /* Simulate long content for scrolling */
+    max-height: 800px;
     padding: 20px;
 }
 .content-dev{
