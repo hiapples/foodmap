@@ -229,59 +229,47 @@
                 const currentHour = now.getHours();
                 const currentMinute = now.getMinutes();
                 const currentTimeInMinutes = currentHour * 60 + currentMinute;
-
                 const dayOfWeek = now.getDay(); // 0 是星期日, 1 是星期一, 以此类推
-                const timeSlots = getTimeSlotsForDay(dayOfWeek, item);
 
-                // 检查是否当前时间在任意一个时间段内
+                // 获取当天和前一天的营业时间段
+                let timeSlotsToday = getTimeSlotsForDay(dayOfWeek, item);
+                let timeSlotsYesterday = getTimeSlotsForDay(dayOfWeek === 0 ? 6 : dayOfWeek - 1, item);
+
+                // 检查当天的营业时间
+                if (isTimeInSlots(currentTimeInMinutes, timeSlotsToday)) {
+                    return true;
+                }
+
+                // 如果当前时间在凌晨（例如00:00到04:00），检查前一天的跨夜时间段
+                if (currentHour < 4) {
+                    if (isTimeInSlots(currentTimeInMinutes + 24 * 60, timeSlotsYesterday)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            function isTimeInSlots(currentTimeInMinutes, timeSlots) {
                 for (const slot of timeSlots) {
                     if (!slot.start || !slot.end) continue;
 
                     const [startHour, startMinute] = slot.start.split(':').map(Number);
                     let [endHour, endMinute] = slot.end.split(':').map(Number);
 
-                    let startTimeInMinutes = startHour * 60 + startMinute;
+                    const startTimeInMinutes = startHour * 60 + startMinute;
                     let endTimeInMinutes = endHour * 60 + endMinute;
 
-                    // 处理全天营业的情况
-                    if (startTimeInMinutes === 0 && endTimeInMinutes === 0) {
-                        return true; // 全天营业
+                    // 处理跨夜时间段
+                    if (endTimeInMinutes < startTimeInMinutes) {
+                        endTimeInMinutes += 24 * 60; // 将跨夜结束时间增加一天的分钟数
                     }
 
-                    // 处理跨天情况，例如 17:00 - 00:00
-                    if (endTimeInMinutes < startTimeInMinutes) {
-                        // 跨天时间段
-                        if (currentTimeInMinutes >= startTimeInMinutes || currentTimeInMinutes < 24 * 60) {
-                            return true;
-                        }
-
-                        // 处理第二天的时间段
-                        const nextDay = (dayOfWeek + 1) % 7;
-                        const nextDaySlots = getTimeSlotsForDay(nextDay, item);
-                        for (const nextDaySlot of nextDaySlots) {
-                            const [nextDayStartHour, nextDayStartMinute] = nextDaySlot.start.split(':').map(Number);
-                            let [nextDayEndHour, nextDayEndMinute] = nextDaySlot.end.split(':').map(Number);
-                            let nextDayStartTimeInMinutes = nextDayStartHour * 60 + nextDayStartMinute;
-                            let nextDayEndTimeInMinutes = nextDayEndHour * 60 + nextDayEndMinute;
-
-                            // 处理第二天的时间段
-                            if (nextDayEndTimeInMinutes < nextDayStartTimeInMinutes) {
-                                nextDayEndTimeInMinutes += 24 * 60;
-                            }
-
-                            if (currentTimeInMinutes < nextDayEndTimeInMinutes) {
-                                return true;
-                            }
-                        }
-                    } else {
-                        // 如果时间段不跨天，只需判断当前时间是否在此时间段内
-                        if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
-                            return true;
-                        }
+                    if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
+                        return true;
                     }
                 }
-
-                return false; // 当前时间不在任何营业时间段内
+                return false;
             }
 
             function getTimeSlotsForDay(dayOfWeek, item) {
@@ -325,6 +313,10 @@
                         return [];
                 }
             }
+
+
+
+
 
             // 更新每个title的颜色
             data.forEach(item => {
