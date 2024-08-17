@@ -142,6 +142,22 @@
             </div>
         </div>
     </div>
+    <!-- 失败模态框title -->
+    <div class="modal fade" id="error-title-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" style="margin-top:100px">
+            <div class="modal-content exampleModal_edit">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">失敗</h5>
+                </div>
+                <div class="modal-body">
+                    資料庫已有資料!
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- footer -->
     <footer>
         <div class="container footer_container">
@@ -208,6 +224,8 @@
             .then(data => {
                 if (data.success) {
                     $('#successModal').modal('show');
+                } else if (data.error === 'duplicate_title') {
+                    $('#error-title-Modal').modal('show');
                 } else {
                     $('#errorModal').modal('show');
                 }
