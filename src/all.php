@@ -72,7 +72,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                     <form action="delete.php" method="POST">
                         <input name="delete_id"value="" id="delete_id" type="hidden"/>
-                        <button type="submit" class="btn btn-primary" >確定</button>
+                        <button type="submit" class="btn btn-danger" >刪除</button>
                     </form>
                 </div>
             </div>
