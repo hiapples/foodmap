@@ -49,7 +49,7 @@
                     </li>
                 </ul>
                 <div class="ml-auto inputsearch-top">
-                    <input class="form-control" id="inputsearch" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                    <input class="form-control" id="inputsearch-top" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
             </div>
             <div class="d-flex ml-auto" >
                 <div class=" inputsearch-down">
-                    <input class="form-control" id="inputsearch" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                    <input class="form-control" id="inputsearch-down" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
                 </div>
             </div>
             <button class="btn btn-secondary dropdown-toggle ml-auto" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -294,11 +294,15 @@
         }else{
             all1();
         }    
-        const inputsearch=document.getElementById("inputsearch")
+        const inputsearch_top=document.getElementById("inputsearch-top")
+        const inputsearch_down=document.getElementById("inputsearch-down")
         const form1_all = document.getElementById("form1-all");
         const form2_search = document.getElementById("form2-search");
-        inputsearch.addEventListener("input", function() {
-            if (inputsearch.value == "") {
+        inputsearch_top.addEventListener("input", toggleForms);
+        inputsearch_down.addEventListener("input", toggleForms);
+        function toggleForms(event) {
+            const inputElement = event.target;
+            if (inputElement.value == "") {
                 form1_all.style.display = "flex";
                 form2_search.style.display = "none";
             } else {
@@ -308,7 +312,7 @@
                 fetch('fetch-all.php')
                 .then(response => response.json()) // 处理JSON数据
                 .then(data => {
-                    const searchValue = inputsearch.value.toLowerCase();
+                    const searchValue = inputElement.value.toLowerCase();
                     const allHTML = document.getElementById("form2-search");
                     let all = "";
                     const filteredData = data.filter(item => item.card_title.toLowerCase().includes(searchValue));
@@ -397,7 +401,7 @@
                 })
                 .catch(error => console.error(error));
             }
-        });
+        }
         //抓公開營業時間
         function all1(){
             small_title_time=document.getElementById("small-title-time")
