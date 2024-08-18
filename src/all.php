@@ -63,6 +63,9 @@
             <div class="small-title" id="small-title-insert">
                 排序:&emsp;新增日期
             </div>
+            <div class="small-title" id="small-title-search">
+                排序:&emsp;搜尋
+            </div>
             <div class="d-flex ml-auto" >
                 <div class=" inputsearch-down">
                     <input class="form-control" id="inputsearch-down" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
@@ -301,13 +304,27 @@
         inputsearch_top.addEventListener("input", toggleForms);
         inputsearch_down.addEventListener("input", toggleForms);
         function toggleForms(event) {
+            small_title_time=document.getElementById("small-title-time")
+            small_title_insert=document.getElementById("small-title-insert")
+            small_title_search=document.getElementById("small-title-search")
             const inputElement = event.target;
             if (inputElement.value == "") {
                 form1_all.style.display = "flex";
                 form2_search.style.display = "none";
+                small_title_search.style.display="none"
+                if(localStorage.getItem('all') == "2"){
+                    small_title_insert.style.display="block"
+                    small_title_time.style.display="none"
+                }else{
+                    small_title_insert.style.display="none"
+                    small_title_time.style.display="block"
+                }
             } else {
                 form1_all.style.display = "none";
                 form2_search.style.display = "flex";
+                small_title_time.style.display="none"
+                small_title_insert.style.display="none"
+                small_title_search.style.display="block"
                 //搜尋
                 fetch('fetch-all.php')
                 .then(response => response.json()) // 处理JSON数据
@@ -406,8 +423,10 @@
         function all1(){
             small_title_time=document.getElementById("small-title-time")
             small_title_insert=document.getElementById("small-title-insert")
+            small_title_search=document.getElementById("small-title-search")
             small_title_time.style.display="block"
             small_title_insert.style.display="none"
+            small_title_search.style.display="none"
             localStorage.setItem('all', '1');
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理JSON数据
@@ -505,8 +524,10 @@
         function all2(){
             small_title_time=document.getElementById("small-title-time")
             small_title_insert=document.getElementById("small-title-insert")
+            small_title_search=document.getElementById("small-title-search")
             small_title_time.style.display="none"
             small_title_insert.style.display="block"
+            small_title_search.style.display="none"
             localStorage.setItem('all', '2');
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理JSON数据
