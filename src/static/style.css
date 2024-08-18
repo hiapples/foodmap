@@ -161,7 +161,6 @@ textarea{
 .form2-search {
     display: none;
 }
-
 .content-dev{
     height: 1000px; /* Simulate long content for scrolling */
     padding: 20px;
@@ -327,6 +326,12 @@ textarea{
 .week{
     font-size: 12px;
 }
+.inputsearch-down{
+    display: none;
+}
+.inputsearch-down #inputsearch{
+    width: clamp(150px, 30vw, 500px);
+}
 @media (max-width: 992px) {
     .nav-item a {
         text-align: center; /* 文本居中对齐 */
@@ -356,6 +361,15 @@ textarea{
     }
     .banner3 {
         clip-path: polygon(40px 0, 100% 0, 100% 100%, 0 100%); /* 左边斜切，右边直角 */
+    }
+    .inputsearch-top{
+        display: none;
+    }
+    .inputsearch-down{
+        display: block;
+    }
+    .small-title{
+        font-size: 12px;
     }
 }
 @media (max-width: 768px) {

@@ -48,9 +48,6 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex ml-auto">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
-                </form>
             </div>
         </div>
     </nav>

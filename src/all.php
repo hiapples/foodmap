@@ -48,9 +48,9 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex ml-auto">
-                    <input class="form-control me-2" id="inputsearch" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
-                </form>
+                <div class="ml-auto inputsearch-top">
+                    <input class="form-control" id="inputsearch" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                </div>
             </div>
         </div>
     </nav>
@@ -62,6 +62,11 @@
             </div>
             <div class="small-title" id="small-title-insert">
                 排序:&emsp;新增日期
+            </div>
+            <div class="d-flex ml-auto" >
+                <div class=" inputsearch-down">
+                    <input class="form-control" id="inputsearch" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+                </div>
             </div>
             <button class="btn btn-secondary dropdown-toggle ml-auto" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 篩選
