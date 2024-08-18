@@ -159,7 +159,7 @@ textarea{
 .small-title{
     color: gray;
     font-size: 14px;
-    display: none;  
+    display: none; 
 }
 .content-dev{
     height: 1000px; /* Simulate long content for scrolling */
