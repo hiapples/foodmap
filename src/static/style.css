@@ -233,7 +233,7 @@ textarea{
     color: #fff;
     text-decoration: none;
     position: fixed;
-    bottom: 20px;
+    bottom: 10px;
     right: 10px;
     font-size: 26px;
 }
@@ -329,7 +329,7 @@ textarea{
 .inputsearch-down{
     display: none;
 }
-.inputsearch-down #inputsearch{
+.inputsearch-down #inputsearch-down{
     width: clamp(150px, 30vw, 500px);
 }
 @media (max-width: 992px) {
