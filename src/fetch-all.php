@@ -14,7 +14,7 @@
     }
 
     // SQL 查询
-    $sql = "SELECT * FROM shop_info";
+    $sql = "SELECT * FROM shop_info ORDER BY id DESC";
     $result = $conn->query($sql);
     
     $data = array();

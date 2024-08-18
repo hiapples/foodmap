@@ -57,14 +57,19 @@
     </nav>
     <!-- content -->
     <div class="container noscroll mt-3 mb-5">
-        <div class="dropdown d-flex mt-2 mb-2">
+        <div class="dropdown d-flex mt-2 mb-2 justify-content-between align-items-center">
+            <div class="small-title" id="small-title-time">
+                營業時間排序
+            </div>
+            <div class="small-title" id="small-title-insert">
+                新增日期排序
+            </div>
             <button class="btn btn-secondary dropdown-toggle ml-auto" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 篩選
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">營業時間</a></li>
-                <li><a class="dropdown-item" href="#">新增日期</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="dropdown-item" href="#" onclick="all1();">營業時間</a></li>
+                <li><a class="dropdown-item" href="#" onclick="all2();">新增日期</a></li>
             </ul>
         </div>
         <div class="row " id="all">
@@ -185,186 +190,292 @@
         window.addEventListener('load', function() {
             window.scrollTo(0, 0); // 滾動到頁面頂部
         });
-        //抓公開
-        fetch('fetch-all.php')
-        .then(response => response.json()) // 处理JSON数据
-        .then(data => {
-            const allHTML = document.getElementById("all");
-            let all = "";
+        //判斷是否營業
+        function isOpen(item) {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentTimeInMinutes = currentHour * 60 + currentMinute;
+            const dayOfWeek = now.getDay(); // 0 是星期日, 1 是星期一, 以此类推
 
-            data.forEach(item => {
-                const id = item.id; // 获取每个项的唯一id
-                const titleId = `card-title-${id}`; // 为每个title设置唯一的id
-                // 构建HTML内容
-                all += 
-                "<div class='col-md-4'>"+
-                    "<div class='card mt-3'>"+
-                        "<div class='card-body'>"+
-                            "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
-                            "<div class='card-text'>"+
-                                "<span>"+
-                                    // 星期一
-                                    "星期一&emsp;" + (item.card_1_1 === "" && item.card_1_2 === "" && item.card_1_3 === "" && item.card_1_4 === "" ? "休假" : item.card_1_1 + "<span id='dash-"+id+"-1-1' class='dash'>&ensp;–&ensp;</span>" + item.card_1_2 + "&emsp;" + item.card_1_3 + "<span id='dash-"+id+"-1-3' class='dash'>&ensp;–&ensp;</span>" + item.card_1_4) + "<br/>"+
-                                    // 星期二
-                                    "星期二&emsp;" + (item.card_2_1 === "" && item.card_2_2 === "" && item.card_2_3 === "" && item.card_2_4 === "" ? "休假" : item.card_2_1 + "<span id='dash-"+id+"-2-1' class='dash'>&ensp;–&ensp;</span>" + item.card_2_2 + "&emsp;" + item.card_2_3 + "<span id='dash-"+id+"-2-3' class='dash'>&ensp;–&ensp;</span>" + item.card_2_4) + "<br/>"+
-                                    // 星期三
-                                    "星期三&emsp;" + (item.card_3_1 === "" && item.card_3_2 === "" && item.card_3_3 === "" && item.card_3_4 === "" ? "休假" : item.card_3_1 + "<span id='dash-"+id+"-3-1' class='dash'>&ensp;–&ensp;</span>" + item.card_3_2 + "&emsp;" + item.card_3_3 + "<span id='dash-"+id+"-3-3' class='dash'>&ensp;–&ensp;</span>" + item.card_3_4) + "<br/>"+
-                                    // 星期四
-                                    "星期四&emsp;" + (item.card_4_1 === "" && item.card_4_2 === "" && item.card_4_3 === "" && item.card_4_4 === "" ? "休假" : item.card_4_1 + "<span id='dash-"+id+"-4-1' class='dash'>&ensp;–&ensp;</span>" + item.card_4_2 + "&emsp;" + item.card_4_3 + "<span id='dash-"+id+"-4-3' class='dash'>&ensp;–&ensp;</span>" + item.card_4_4) + "<br/>"+
-                                    // 星期五
-                                    "星期五&emsp;" + (item.card_5_1 === "" && item.card_5_2 === "" && item.card_5_3 === "" && item.card_5_4 === "" ? "休假" : item.card_5_1 + "<span id='dash-"+id+"-5-1' class='dash'>&ensp;–&ensp;</span>" + item.card_5_2 + "&emsp;" + item.card_5_3 + "<span id='dash-"+id+"-5-3' class='dash'>&ensp;–&ensp;</span>" + item.card_5_4) + "<br/>"+
-                                    // 星期六
-                                    "星期六&emsp;" + (item.card_6_1 === "" && item.card_6_2 === "" && item.card_6_3 === "" && item.card_6_4 === "" ? "休假" : item.card_6_1 + "<span id='dash-"+id+"-6-1' class='dash'>&ensp;–&ensp;</span>" + item.card_6_2 + "&emsp;" + item.card_6_3 + "<span id='dash-"+id+"-6-3' class='dash'>&ensp;–&ensp;</span>" + item.card_6_4) + "<br/>"+
-                                    // 星期日
-                                    "星期日&emsp;" + (item.card_7_1 === "" && item.card_7_2 === "" && item.card_7_3 === "" && item.card_7_4 === "" ? "休假" : item.card_7_1 + "<span id='dash-"+id+"-7-1' class='dash'>&ensp;–&ensp;</span>" + item.card_7_2 + "&emsp;" + item.card_7_3 + "<span id='dash-"+id+"-7-3' class='dash'>&ensp;–&ensp;</span>" + item.card_7_4) + "<br/>"+
-                                "</span><br/>"+
-                                    "類別:&ensp;"+item.card_class+"<br/>"+
-                                    "地址:&ensp;<a style='color:gray' href='"+item.card_link+"'>"+item.card_address+"</a><br/>"+
-                                    "備註:&ensp;"+item.card_message+
-                            "</div>"+
-                            "<div class='justify-content-end d-flex mt-4'>"+
-                                "<button class='btn btn-secondary mr-2 update_button' onclick='get_edit_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_edit'>編輯</button>"+
-                                "<button class='btn btn-danger btn-delete dismiss_button' onclick='get_delete_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_delete'>刪除</button>"+
-                            "</div>"+
-                        "</div>"+
-                    "</div>"+
-                "</div>"; 
-            });
+            // 获取当天和前一天的营业时间段
+            let timeSlotsToday = getTimeSlotsForDay(dayOfWeek, item);
+            let timeSlotsYesterday = getTimeSlotsForDay(dayOfWeek === 0 ? 6 : dayOfWeek - 1, item);
 
-            // 更新HTML内容
-            allHTML.innerHTML = all;
-            //判斷是否營業
-            function isOpen(item) {
-                const now = new Date();
-                const currentHour = now.getHours();
-                const currentMinute = now.getMinutes();
-                const currentTimeInMinutes = currentHour * 60 + currentMinute;
-                const dayOfWeek = now.getDay(); // 0 是星期日, 1 是星期一, 以此类推
+            // 检查当天的营业时间
+            if (isTimeInSlots(currentTimeInMinutes, timeSlotsToday)) {
+                return true;
+            }
 
-                // 获取当天和前一天的营业时间段
-                let timeSlotsToday = getTimeSlotsForDay(dayOfWeek, item);
-                let timeSlotsYesterday = getTimeSlotsForDay(dayOfWeek === 0 ? 6 : dayOfWeek - 1, item);
-
-                // 检查当天的营业时间
-                if (isTimeInSlots(currentTimeInMinutes, timeSlotsToday)) {
+            // 如果当前时间在凌晨（例如00:00到04:00），检查前一天的跨夜时间段
+            if (currentHour < 4) {
+                if (isTimeInSlots(currentTimeInMinutes + 24 * 60, timeSlotsYesterday)) {
                     return true;
                 }
-
-                // 如果当前时间在凌晨（例如00:00到04:00），检查前一天的跨夜时间段
-                if (currentHour < 4) {
-                    if (isTimeInSlots(currentTimeInMinutes + 24 * 60, timeSlotsYesterday)) {
-                        return true;
-                    }
-                }
-
-                return false;
             }
 
-            function isTimeInSlots(currentTimeInMinutes, timeSlots) {
-                for (const slot of timeSlots) {
-                    if (!slot.start || !slot.end) continue;
+            return false;
+        }
+        function isTimeInSlots(currentTimeInMinutes, timeSlots) {
+            for (const slot of timeSlots) {
+                if (!slot.start || !slot.end) continue;
 
-                    const [startHour, startMinute] = slot.start.split(':').map(Number);
-                    let [endHour, endMinute] = slot.end.split(':').map(Number);
+                const [startHour, startMinute] = slot.start.split(':').map(Number);
+                let [endHour, endMinute] = slot.end.split(':').map(Number);
 
-                    const startTimeInMinutes = startHour * 60 + startMinute;
-                    let endTimeInMinutes = endHour * 60 + endMinute;
+                const startTimeInMinutes = startHour * 60 + startMinute;
+                let endTimeInMinutes = endHour * 60 + endMinute;
 
-                    // 处理跨夜时间段
-                    if (endTimeInMinutes < startTimeInMinutes) {
-                        endTimeInMinutes += 24 * 60; // 将跨夜结束时间增加一天的分钟数
-                    }
-
-                    if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
-                        return true;
-                    }
+                // 处理跨夜时间段
+                if (endTimeInMinutes < startTimeInMinutes) {
+                    endTimeInMinutes += 24 * 60; // 将跨夜结束时间增加一天的分钟数
                 }
-                return false;
-            }
 
-            function getTimeSlotsForDay(dayOfWeek, item) {
-                switch(dayOfWeek) {
-                    case 0: // 星期日
-                        return [
-                            { start: item.card_7_1, end: item.card_7_2 },
-                            { start: item.card_7_3, end: item.card_7_4 }
-                        ];
-                    case 1: // 星期一
-                        return [
-                            { start: item.card_1_1, end: item.card_1_2 },
-                            { start: item.card_1_3, end: item.card_1_4 }
-                        ];
-                    case 2: // 星期二
-                        return [
-                            { start: item.card_2_1, end: item.card_2_2 },
-                            { start: item.card_2_3, end: item.card_2_4 }
-                        ];
-                    case 3: // 星期三
-                        return [
-                            { start: item.card_3_1, end: item.card_3_2 },
-                            { start: item.card_3_3, end: item.card_3_4 }
-                        ];
-                    case 4: // 星期四
-                        return [
-                            { start: item.card_4_1, end: item.card_4_2 },
-                            { start: item.card_4_3, end: item.card_4_4 }
-                        ];
-                    case 5: // 星期五
-                        return [
-                            { start: item.card_5_1, end: item.card_5_2 },
-                            { start: item.card_5_3, end: item.card_5_4 }
-                        ];
-                    case 6: // 星期六
-                        return [
-                            { start: item.card_6_1, end: item.card_6_2 },
-                            { start: item.card_6_3, end: item.card_6_4 }
-                        ];
-                    default:
-                        return [];
+                if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
+                    return true;
                 }
             }
+            return false;
+        }
+        function getTimeSlotsForDay(dayOfWeek, item) {
+            switch(dayOfWeek) {
+                case 0: // 星期日
+                    return [
+                        { start: item.card_7_1, end: item.card_7_2 },
+                        { start: item.card_7_3, end: item.card_7_4 }
+                    ];
+                case 1: // 星期一
+                    return [
+                        { start: item.card_1_1, end: item.card_1_2 },
+                        { start: item.card_1_3, end: item.card_1_4 }
+                    ];
+                case 2: // 星期二
+                    return [
+                        { start: item.card_2_1, end: item.card_2_2 },
+                        { start: item.card_2_3, end: item.card_2_4 }
+                    ];
+                case 3: // 星期三
+                    return [
+                        { start: item.card_3_1, end: item.card_3_2 },
+                        { start: item.card_3_3, end: item.card_3_4 }
+                    ];
+                case 4: // 星期四
+                    return [
+                        { start: item.card_4_1, end: item.card_4_2 },
+                        { start: item.card_4_3, end: item.card_4_4 }
+                    ];
+                case 5: // 星期五
+                    return [
+                        { start: item.card_5_1, end: item.card_5_2 },
+                        { start: item.card_5_3, end: item.card_5_4 }
+                    ];
+                case 6: // 星期六
+                    return [
+                        { start: item.card_6_1, end: item.card_6_2 },
+                        { start: item.card_6_3, end: item.card_6_4 }
+                    ];
+                default:
+                    return [];
+            }
+        }    
+        //判斷公開頁面
+        if (localStorage.getItem('all') == "2"){
+            all2();
+        }else{
+            all1();
+        }    
+        //抓公開營業時間
+        function all1(){
+            small_title_time=document.getElementById("small-title-time")
+            small_title_insert=document.getElementById("small-title-insert")
+            small_title_time.style.display="block"
+            small_title_insert.style.display="none"
+            localStorage.setItem('all', '1');
+            fetch('fetch-all.php')
+            .then(response => response.json()) // 处理JSON数据
+            .then(data => {
+                const allHTML = document.getElementById("all");
+                let all = "";
+                // 先根據是否營業進行排序
+                data.sort((a, b) => {
+                    const isOpenA = isOpen(a);
+                    const isOpenB = isOpen(b);
+                    return isOpenB - isOpenA; // 营业中的排在前面
+                });
 
+                // 构建HTML内容
+                data.forEach(item => {
+                    const id = item.id; // 获取每个项的唯一id
+                    const titleId = `card-title-${id}`; // 为每个title设置唯一的id
 
+                    all += 
+                    "<div class='col-md-4'>"+
+                        "<div class='card mt-3'>"+
+                            "<div class='card-body'>"+
+                                "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
+                                "<div class='card-text'>"+
+                                    "<span>"+
+                                        // 星期一
+                                        "星期一&emsp;" + (item.card_1_1 === "" && item.card_1_2 === "" && item.card_1_3 === "" && item.card_1_4 === "" ? "休假" : item.card_1_1 + "<span id='dash-"+id+"-1-1' class='dash'>&ensp;–&ensp;</span>" + item.card_1_2 + "&emsp;" + item.card_1_3 + "<span id='dash-"+id+"-1-3' class='dash'>&ensp;–&ensp;</span>" + item.card_1_4) + "<br/>"+
+                                        // 星期二
+                                        "星期二&emsp;" + (item.card_2_1 === "" && item.card_2_2 === "" && item.card_2_3 === "" && item.card_2_4 === "" ? "休假" : item.card_2_1 + "<span id='dash-"+id+"-2-1' class='dash'>&ensp;–&ensp;</span>" + item.card_2_2 + "&emsp;" + item.card_2_3 + "<span id='dash-"+id+"-2-3' class='dash'>&ensp;–&ensp;</span>" + item.card_2_4) + "<br/>"+
+                                        // 星期三
+                                        "星期三&emsp;" + (item.card_3_1 === "" && item.card_3_2 === "" && item.card_3_3 === "" && item.card_3_4 === "" ? "休假" : item.card_3_1 + "<span id='dash-"+id+"-3-1' class='dash'>&ensp;–&ensp;</span>" + item.card_3_2 + "&emsp;" + item.card_3_3 + "<span id='dash-"+id+"-3-3' class='dash'>&ensp;–&ensp;</span>" + item.card_3_4) + "<br/>"+
+                                        // 星期四
+                                        "星期四&emsp;" + (item.card_4_1 === "" && item.card_4_2 === "" && item.card_4_3 === "" && item.card_4_4 === "" ? "休假" : item.card_4_1 + "<span id='dash-"+id+"-4-1' class='dash'>&ensp;–&ensp;</span>" + item.card_4_2 + "&emsp;" + item.card_4_3 + "<span id='dash-"+id+"-4-3' class='dash'>&ensp;–&ensp;</span>" + item.card_4_4) + "<br/>"+
+                                        // 星期五
+                                        "星期五&emsp;" + (item.card_5_1 === "" && item.card_5_2 === "" && item.card_5_3 === "" && item.card_5_4 === "" ? "休假" : item.card_5_1 + "<span id='dash-"+id+"-5-1' class='dash'>&ensp;–&ensp;</span>" + item.card_5_2 + "&emsp;" + item.card_5_3 + "<span id='dash-"+id+"-5-3' class='dash'>&ensp;–&ensp;</span>" + item.card_5_4) + "<br/>"+
+                                        // 星期六
+                                        "星期六&emsp;" + (item.card_6_1 === "" && item.card_6_2 === "" && item.card_6_3 === "" && item.card_6_4 === "" ? "休假" : item.card_6_1 + "<span id='dash-"+id+"-6-1' class='dash'>&ensp;–&ensp;</span>" + item.card_6_2 + "&emsp;" + item.card_6_3 + "<span id='dash-"+id+"-6-3' class='dash'>&ensp;–&ensp;</span>" + item.card_6_4) + "<br/>"+
+                                        // 星期日
+                                        "星期日&emsp;" + (item.card_7_1 === "" && item.card_7_2 === "" && item.card_7_3 === "" && item.card_7_4 === "" ? "休假" : item.card_7_1 + "<span id='dash-"+id+"-7-1' class='dash'>&ensp;–&ensp;</span>" + item.card_7_2 + "&emsp;" + item.card_7_3 + "<span id='dash-"+id+"-7-3' class='dash'>&ensp;–&ensp;</span>" + item.card_7_4) + "<br/>"+
+                                    "</span><br/>"+
+                                        "類別:&ensp;"+item.card_class+"<br/>"+
+                                        "地址:&ensp;<a style='color:gray' href='"+item.card_link+"'>"+item.card_address+"</a><br/>"+
+                                        "備註:&ensp;"+item.card_message+
+                                "</div>"+
+                                "<div class='justify-content-end d-flex mt-4'>"+
+                                    "<button class='btn btn-secondary mr-2 update_button' onclick='get_edit_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_edit'>編輯</button>"+
+                                    "<button class='btn btn-danger btn-delete dismiss_button' onclick='get_delete_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_delete'>刪除</button>"+
+                                "</div>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>";
+                });
 
+                allHTML.innerHTML = all;
+                // 更新每个title的颜色
+                data.forEach(item => {
+                    const titleElement = document.getElementById(`card-title-${item.id}`);
+                    if (isOpen(item)) {
+                        if (titleElement) {
+                            titleElement.style.color = 'green';
+                        }
+                    } 
+                });
+                // 根据内容更新每个dash的可见性
+                data.forEach(item => {
+                    for (let day = 1; day <= 7; day++) {
+                        const card_1 = item[`card_${day}_1`];
+                        const card_2 = item[`card_${day}_2`];
+                        const card_3 = item[`card_${day}_3`];
+                        const card_4 = item[`card_${day}_4`];
 
-
-            // 更新每个title的颜色
-            data.forEach(item => {
-                const titleElement = document.getElementById(`card-title-${item.id}`);
-                if (isOpen(item)) {
-                    if (titleElement) {
-                        titleElement.style.color = 'green';
+                        // 如果两个时段都为空，显示“休假”，否则显示时间段
+                        if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
+                            document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
+                        } else {
+                            document.querySelector(`#dash-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
+                            document.querySelector(`#dash-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
+                        }
                     }
+                });
+
+                // 更新按钮的可见性
+                const update_buttons = document.querySelectorAll(".update_button");
+                const dismiss_buttons = document.querySelectorAll(".dismiss_button");
+                if (localStorage.getItem('password') == "666") {
+                    update_buttons.forEach(button => button.style.display = "block");
+                    dismiss_buttons.forEach(button => button.style.display = "block");
                 } 
-            });
-            // 根据内容更新每个dash的可见性
-            data.forEach(item => {
-                for (let day = 1; day <= 7; day++) {
-                    const card_1 = item[`card_${day}_1`];
-                    const card_2 = item[`card_${day}_2`];
-                    const card_3 = item[`card_${day}_3`];
-                    const card_4 = item[`card_${day}_4`];
+            })
+            .catch(error => console.error(error));
+        }   
+        
+     
+        //抓公開新增日期
+        function all2(){
+            small_title_time=document.getElementById("small-title-time")
+            small_title_insert=document.getElementById("small-title-insert")
+            small_title_time.style.display="none"
+            small_title_insert.style.display="block"
+            localStorage.setItem('all', '2');
+            fetch('fetch-all.php')
+            .then(response => response.json()) // 处理JSON数据
+            .then(data => {
+                const allHTML = document.getElementById("all");
+                let all = "";
 
-                    // 如果两个时段都为空，显示“休假”，否则显示时间段
-                    if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
-                        document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
-                    } else {
-                        document.querySelector(`#dash-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
-                        document.querySelector(`#dash-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
+                data.forEach(item => {
+                    const id = item.id; // 获取每个项的唯一id
+                    const titleId = `card-title-${id}`; // 为每个title设置唯一的id
+                    // 构建HTML内容
+                    all += 
+                    "<div class='col-md-4'>"+
+                        "<div class='card mt-3'>"+
+                            "<div class='card-body'>"+
+                                "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
+                                "<div class='card-text'>"+
+                                    "<span>"+
+                                        // 星期一
+                                        "星期一&emsp;" + (item.card_1_1 === "" && item.card_1_2 === "" && item.card_1_3 === "" && item.card_1_4 === "" ? "休假" : item.card_1_1 + "<span id='dash-"+id+"-1-1' class='dash'>&ensp;–&ensp;</span>" + item.card_1_2 + "&emsp;" + item.card_1_3 + "<span id='dash-"+id+"-1-3' class='dash'>&ensp;–&ensp;</span>" + item.card_1_4) + "<br/>"+
+                                        // 星期二
+                                        "星期二&emsp;" + (item.card_2_1 === "" && item.card_2_2 === "" && item.card_2_3 === "" && item.card_2_4 === "" ? "休假" : item.card_2_1 + "<span id='dash-"+id+"-2-1' class='dash'>&ensp;–&ensp;</span>" + item.card_2_2 + "&emsp;" + item.card_2_3 + "<span id='dash-"+id+"-2-3' class='dash'>&ensp;–&ensp;</span>" + item.card_2_4) + "<br/>"+
+                                        // 星期三
+                                        "星期三&emsp;" + (item.card_3_1 === "" && item.card_3_2 === "" && item.card_3_3 === "" && item.card_3_4 === "" ? "休假" : item.card_3_1 + "<span id='dash-"+id+"-3-1' class='dash'>&ensp;–&ensp;</span>" + item.card_3_2 + "&emsp;" + item.card_3_3 + "<span id='dash-"+id+"-3-3' class='dash'>&ensp;–&ensp;</span>" + item.card_3_4) + "<br/>"+
+                                        // 星期四
+                                        "星期四&emsp;" + (item.card_4_1 === "" && item.card_4_2 === "" && item.card_4_3 === "" && item.card_4_4 === "" ? "休假" : item.card_4_1 + "<span id='dash-"+id+"-4-1' class='dash'>&ensp;–&ensp;</span>" + item.card_4_2 + "&emsp;" + item.card_4_3 + "<span id='dash-"+id+"-4-3' class='dash'>&ensp;–&ensp;</span>" + item.card_4_4) + "<br/>"+
+                                        // 星期五
+                                        "星期五&emsp;" + (item.card_5_1 === "" && item.card_5_2 === "" && item.card_5_3 === "" && item.card_5_4 === "" ? "休假" : item.card_5_1 + "<span id='dash-"+id+"-5-1' class='dash'>&ensp;–&ensp;</span>" + item.card_5_2 + "&emsp;" + item.card_5_3 + "<span id='dash-"+id+"-5-3' class='dash'>&ensp;–&ensp;</span>" + item.card_5_4) + "<br/>"+
+                                        // 星期六
+                                        "星期六&emsp;" + (item.card_6_1 === "" && item.card_6_2 === "" && item.card_6_3 === "" && item.card_6_4 === "" ? "休假" : item.card_6_1 + "<span id='dash-"+id+"-6-1' class='dash'>&ensp;–&ensp;</span>" + item.card_6_2 + "&emsp;" + item.card_6_3 + "<span id='dash-"+id+"-6-3' class='dash'>&ensp;–&ensp;</span>" + item.card_6_4) + "<br/>"+
+                                        // 星期日
+                                        "星期日&emsp;" + (item.card_7_1 === "" && item.card_7_2 === "" && item.card_7_3 === "" && item.card_7_4 === "" ? "休假" : item.card_7_1 + "<span id='dash-"+id+"-7-1' class='dash'>&ensp;–&ensp;</span>" + item.card_7_2 + "&emsp;" + item.card_7_3 + "<span id='dash-"+id+"-7-3' class='dash'>&ensp;–&ensp;</span>" + item.card_7_4) + "<br/>"+
+                                    "</span><br/>"+
+                                        "類別:&ensp;"+item.card_class+"<br/>"+
+                                        "地址:&ensp;<a style='color:gray' href='"+item.card_link+"'>"+item.card_address+"</a><br/>"+
+                                        "備註:&ensp;"+item.card_message+
+                                "</div>"+
+                                "<div class='justify-content-end d-flex mt-4'>"+
+                                    "<button class='btn btn-secondary mr-2 update_button' onclick='get_edit_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_edit'>編輯</button>"+
+                                    "<button class='btn btn-danger btn-delete dismiss_button' onclick='get_delete_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_delete'>刪除</button>"+
+                                "</div>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>"; 
+                });
+
+                // 更新HTML内容
+                allHTML.innerHTML = all;
+
+
+                // 更新每个title的颜色
+                data.forEach(item => {
+                    const titleElement = document.getElementById(`card-title-${item.id}`);
+                    if (isOpen(item)) {
+                        if (titleElement) {
+                            titleElement.style.color = 'green';
+                        }
+                    } 
+                });
+                // 根据内容更新每个dash的可见性
+                data.forEach(item => {
+                    for (let day = 1; day <= 7; day++) {
+                        const card_1 = item[`card_${day}_1`];
+                        const card_2 = item[`card_${day}_2`];
+                        const card_3 = item[`card_${day}_3`];
+                        const card_4 = item[`card_${day}_4`];
+
+                        // 如果两个时段都为空，显示“休假”，否则显示时间段
+                        if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
+                            document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
+                        } else {
+                            document.querySelector(`#dash-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
+                            document.querySelector(`#dash-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
+                        }
                     }
-                }
-            });
+                });
 
-            // 更新按钮的可见性
-            const update_buttons = document.querySelectorAll(".update_button");
-            const dismiss_buttons = document.querySelectorAll(".dismiss_button");
-            if (localStorage.getItem('password') == "666") {
-                update_buttons.forEach(button => button.style.display = "block");
-                dismiss_buttons.forEach(button => button.style.display = "block");
-            } 
-        })
-        .catch(error => console.error('获取数据时出错:', error));
-
+                // 更新按钮的可见性
+                const update_buttons = document.querySelectorAll(".update_button");
+                const dismiss_buttons = document.querySelectorAll(".dismiss_button");
+                if (localStorage.getItem('password') == "666") {
+                    update_buttons.forEach(button => button.style.display = "block");
+                    dismiss_buttons.forEach(button => button.style.display = "block");
+                } 
+            })
+            .catch(error => console.error('获取数据时出错:', error));
+        }
 
         //delete
         function get_delete_id(element){
