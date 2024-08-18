@@ -49,8 +49,7 @@
                     </li>
                 </ul>
                 <form class="d-flex ml-auto">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success search_button" type="submit">Search</button>  
+                    <input class="form-control me-2" id="inputsearch" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
                 </form>
             </div>
         </div>
@@ -72,9 +71,15 @@
                 <li><a class="dropdown-item" href="#" onclick="all2();">新增日期</a></li>
             </ul>
         </div>
-        <div class="row " id="all">
-            
+        <div>
+            <div class="row form1-all " id="form1-all">
+
+            </div>
+            <div class="row form2-search " id="form2-search">
+
+            </div>
         </div>
+
     </div>
     <!-- 刪除確認Modal -->
     <div class="modal fade" id="exampleModal_delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -284,6 +289,110 @@
         }else{
             all1();
         }    
+        const inputsearch=document.getElementById("inputsearch")
+        const form1_all = document.getElementById("form1-all");
+        const form2_search = document.getElementById("form2-search");
+        inputsearch.addEventListener("input", function() {
+            if (inputsearch.value == "") {
+                form1_all.style.display = "flex";
+                form2_search.style.display = "none";
+            } else {
+                form1_all.style.display = "none";
+                form2_search.style.display = "flex";
+                //搜尋
+                fetch('fetch-all.php')
+                .then(response => response.json()) // 处理JSON数据
+                .then(data => {
+                    const searchValue = inputsearch.value.toLowerCase();
+                    const allHTML = document.getElementById("form2-search");
+                    let all = "";
+                    const filteredData = data.filter(item => item.card_title.toLowerCase().includes(searchValue));
+                    // 先根據是否營業進行排序
+                    data.sort((a, b) => {
+                        const isOpenA = isOpen(a);
+                        const isOpenB = isOpen(b);
+                        return isOpenB - isOpenA; // 营业中的排在前面
+                    });
+
+                    // 构建HTML内容
+                    filteredData.forEach(item => {
+                        const id = item.id; // 获取每个项的唯一id
+                        const titleId = `card-title-${id}`; // 为每个title设置唯一的id
+
+                        all += 
+                        "<div class='col-md-4'>"+
+                            "<div class='card mt-3'>"+
+                                "<div class='card-body'>"+
+                                    "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
+                                    "<div class='card-text'>"+
+                                        "<span>"+
+                                            // 星期一
+                                            "星期一&emsp;" + (item.card_1_1 === "" && item.card_1_2 === "" && item.card_1_3 === "" && item.card_1_4 === "" ? "休假" : item.card_1_1 + "<span id='dash-"+id+"-1-1' class='dash'>&ensp;–&ensp;</span>" + item.card_1_2 + "&emsp;" + item.card_1_3 + "<span id='dash-"+id+"-1-3' class='dash'>&ensp;–&ensp;</span>" + item.card_1_4) + "<br/>"+
+                                            // 星期二
+                                            "星期二&emsp;" + (item.card_2_1 === "" && item.card_2_2 === "" && item.card_2_3 === "" && item.card_2_4 === "" ? "休假" : item.card_2_1 + "<span id='dash-"+id+"-2-1' class='dash'>&ensp;–&ensp;</span>" + item.card_2_2 + "&emsp;" + item.card_2_3 + "<span id='dash-"+id+"-2-3' class='dash'>&ensp;–&ensp;</span>" + item.card_2_4) + "<br/>"+
+                                            // 星期三
+                                            "星期三&emsp;" + (item.card_3_1 === "" && item.card_3_2 === "" && item.card_3_3 === "" && item.card_3_4 === "" ? "休假" : item.card_3_1 + "<span id='dash-"+id+"-3-1' class='dash'>&ensp;–&ensp;</span>" + item.card_3_2 + "&emsp;" + item.card_3_3 + "<span id='dash-"+id+"-3-3' class='dash'>&ensp;–&ensp;</span>" + item.card_3_4) + "<br/>"+
+                                            // 星期四
+                                            "星期四&emsp;" + (item.card_4_1 === "" && item.card_4_2 === "" && item.card_4_3 === "" && item.card_4_4 === "" ? "休假" : item.card_4_1 + "<span id='dash-"+id+"-4-1' class='dash'>&ensp;–&ensp;</span>" + item.card_4_2 + "&emsp;" + item.card_4_3 + "<span id='dash-"+id+"-4-3' class='dash'>&ensp;–&ensp;</span>" + item.card_4_4) + "<br/>"+
+                                            // 星期五
+                                            "星期五&emsp;" + (item.card_5_1 === "" && item.card_5_2 === "" && item.card_5_3 === "" && item.card_5_4 === "" ? "休假" : item.card_5_1 + "<span id='dash-"+id+"-5-1' class='dash'>&ensp;–&ensp;</span>" + item.card_5_2 + "&emsp;" + item.card_5_3 + "<span id='dash-"+id+"-5-3' class='dash'>&ensp;–&ensp;</span>" + item.card_5_4) + "<br/>"+
+                                            // 星期六
+                                            "星期六&emsp;" + (item.card_6_1 === "" && item.card_6_2 === "" && item.card_6_3 === "" && item.card_6_4 === "" ? "休假" : item.card_6_1 + "<span id='dash-"+id+"-6-1' class='dash'>&ensp;–&ensp;</span>" + item.card_6_2 + "&emsp;" + item.card_6_3 + "<span id='dash-"+id+"-6-3' class='dash'>&ensp;–&ensp;</span>" + item.card_6_4) + "<br/>"+
+                                            // 星期日
+                                            "星期日&emsp;" + (item.card_7_1 === "" && item.card_7_2 === "" && item.card_7_3 === "" && item.card_7_4 === "" ? "休假" : item.card_7_1 + "<span id='dash-"+id+"-7-1' class='dash'>&ensp;–&ensp;</span>" + item.card_7_2 + "&emsp;" + item.card_7_3 + "<span id='dash-"+id+"-7-3' class='dash'>&ensp;–&ensp;</span>" + item.card_7_4) + "<br/>"+
+                                        "</span><br/>"+
+                                            "類別:&ensp;"+item.card_class+"<br/>"+
+                                            "地址:&ensp;<a style='color:gray' href='"+item.card_link+"'>"+item.card_address+"</a><br/>"+
+                                            "備註:&ensp;"+item.card_message+
+                                    "</div>"+
+                                    "<div class='justify-content-end d-flex mt-4'>"+
+                                        "<button class='btn btn-secondary mr-2 update_button' onclick='get_edit_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_edit'>編輯</button>"+
+                                        "<button class='btn btn-danger btn-delete dismiss_button' onclick='get_delete_id(this)' id='"+id+"' data-bs-toggle='modal' data-bs-target='#exampleModal_delete'>刪除</button>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</div>"+
+                        "</div>";
+                    });
+
+                    allHTML.innerHTML = all;
+                    // 更新每个title的颜色
+                    data.forEach(item => {
+                        const titleElement = document.getElementById(`card-title-${item.id}`);
+                        if (isOpen(item)) {
+                            if (titleElement) {
+                                titleElement.style.color = 'green';
+                            }
+                        } 
+                    });
+                    // 根据内容更新每个dash的可见性
+                    data.forEach(item => {
+                        for (let day = 1; day <= 7; day++) {
+                            const card_1 = item[`card_${day}_1`];
+                            const card_2 = item[`card_${day}_2`];
+                            const card_3 = item[`card_${day}_3`];
+                            const card_4 = item[`card_${day}_4`];
+
+                            // 如果两个时段都为空，显示“休假”，否则显示时间段
+                            if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
+                                document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
+                            } else {
+                                document.querySelector(`#dash-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
+                                document.querySelector(`#dash-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
+                            }
+                        }
+                    });
+
+                    // 更新按钮的可见性
+                    const update_buttons = document.querySelectorAll(".update_button");
+                    const dismiss_buttons = document.querySelectorAll(".dismiss_button");
+                    if (localStorage.getItem('password') == "666") {
+                        update_buttons.forEach(button => button.style.display = "block");
+                        dismiss_buttons.forEach(button => button.style.display = "block");
+                    } 
+                })
+                .catch(error => console.error(error));
+            }
+        });
         //抓公開營業時間
         function all1(){
             small_title_time=document.getElementById("small-title-time")
@@ -294,7 +403,7 @@
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理JSON数据
             .then(data => {
-                const allHTML = document.getElementById("all");
+                const allHTML = document.getElementById("form1-all");
                 let all = "";
                 // 先根據是否營業進行排序
                 data.sort((a, b) => {
@@ -393,7 +502,7 @@
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理JSON数据
             .then(data => {
-                const allHTML = document.getElementById("all");
+                const allHTML = document.getElementById("form1-all");
                 let all = "";
 
                 data.forEach(item => {

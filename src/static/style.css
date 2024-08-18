@@ -24,10 +24,7 @@ body{
     margin: 0;
     overflow-x: hidden;
 }
-.search_button{
-    background-color:rgb(32, 114, 32);
-    color:white
-}
+
 footer{
     border-radius: 0%;  
     background-color:#4D7E3E;
@@ -161,6 +158,10 @@ textarea{
     font-size: 14px;
     display: none; 
 }
+.form2-search {
+    display: none;
+}
+
 .content-dev{
     height: 1000px; /* Simulate long content for scrolling */
     padding: 20px;

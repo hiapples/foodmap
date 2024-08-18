@@ -49,8 +49,7 @@
                     </li>
                 </ul>
                 <form class="d-flex ml-auto">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success search_button" type="submit">Search</button>  
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"autocomplete="off">
                 </form>
             </div>
         </div>
