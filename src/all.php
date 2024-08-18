@@ -292,15 +292,15 @@
             }
         }    
         //判斷公開頁面
-        if (localStorage.getItem('all') == "2"){
-            all2();
-        }else{
-            all1();
-        }    
         const inputsearch_top=document.getElementById("inputsearch-top")
         const inputsearch_down=document.getElementById("inputsearch-down")
         const form1_all = document.getElementById("form1-all");
         const form2_search = document.getElementById("form2-search");
+        if (localStorage.getItem('all') == "2"){
+            all2();
+        }else{
+            all1();
+        }
         inputsearch_top.addEventListener("input", toggleForms);
         inputsearch_down.addEventListener("input", toggleForms);
         function toggleForms(event) {
@@ -427,6 +427,10 @@
             small_title_time.style.display="block"
             small_title_insert.style.display="none"
             small_title_search.style.display="none"
+            form1_all.style.display = "flex";
+            form2_search.style.display = "none";
+            inputsearch_top.value=""
+            inputsearch_down.value=""
             localStorage.setItem('all', '1');
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理JSON数据
@@ -528,6 +532,10 @@
             small_title_time.style.display="none"
             small_title_insert.style.display="block"
             small_title_search.style.display="none"
+            form1_all.style.display = "flex";
+            form2_search.style.display = "none";
+            inputsearch_top.value=""
+            inputsearch_down.value=""
             localStorage.setItem('all', '2');
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理JSON数据
