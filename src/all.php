@@ -59,10 +59,10 @@
     <div class="container noscroll mt-3 mb-5">
         <div class="dropdown d-flex mt-2 mb-2 justify-content-between align-items-center">
             <div class="small-title" id="small-title-time">
-                營業時間排序
+                排序:&emsp;營業時間
             </div>
             <div class="small-title" id="small-title-insert">
-                新增日期排序
+                排序:&emsp;新增日期
             </div>
             <button class="btn btn-secondary dropdown-toggle ml-auto" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 篩選
