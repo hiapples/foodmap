@@ -157,7 +157,7 @@ textarea{
     overflow-y:hidden;
 }
 .small-title{
-    color: gray;
+    color: gainsboro;
     font-size: 14px;
     display: none; 
 }
