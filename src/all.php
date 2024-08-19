@@ -221,7 +221,7 @@
             }
 
             // 如果当前时间在凌晨（例如00:00到04:00），检查前一天的跨夜时间段
-            if (currentHour < 4) {
+            if (currentHour < 4 ) {
                 if (isTimeInSlots(currentTimeInMinutes + 24 * 60, timeSlotsYesterday)) {
                     return true;
                 }

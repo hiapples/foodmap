@@ -52,7 +52,10 @@
         </div>
     </nav>
     <!-- content -->
-    <div class="container content mt-3">
+    <div class="container content">
+        <div class="d-flex small-title mb-3">
+            <div class="mx-auto">*僅顯示營業中地標*</div>
+        </div>
         <div id="map"></div>
         <div class="d-flex justify-content-center mt-3">
             <button id="locate-btn">當前位置</button>
@@ -180,12 +183,102 @@
         }
 
 
+        //判斷是否營業
+        function isOpen(item) {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentTimeInMinutes = currentHour * 60 + currentMinute;
+            const dayOfWeek = now.getDay(); // 0 是星期日, 1 是星期一, 以此类推
 
+            // 获取当天和前一天的营业时间段
+            let timeSlotsToday = getTimeSlotsForDay(dayOfWeek, item);
+            let timeSlotsYesterday = getTimeSlotsForDay(dayOfWeek === 0 ? 6 : dayOfWeek - 1, item);
+
+            // 检查当天的营业时间
+            if (isTimeInSlots(currentTimeInMinutes, timeSlotsToday)) {
+                return true;
+            }
+
+            // 如果当前时间在凌晨（例如00:00到04:00），检查前一天的跨夜时间段
+            if (currentHour < 4) {
+                if (isTimeInSlots(currentTimeInMinutes + 24 * 60, timeSlotsYesterday)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        function isTimeInSlots(currentTimeInMinutes, timeSlots) {
+            for (const slot of timeSlots) {
+                if (!slot.start || !slot.end) continue;
+
+                const [startHour, startMinute] = slot.start.split(':').map(Number);
+                let [endHour, endMinute] = slot.end.split(':').map(Number);
+
+                const startTimeInMinutes = startHour * 60 + startMinute;
+                let endTimeInMinutes = endHour * 60 + endMinute;
+
+                // 处理跨夜时间段
+                if (endTimeInMinutes < startTimeInMinutes) {
+                    endTimeInMinutes += 24 * 60; // 将跨夜结束时间增加一天的分钟数
+                }
+
+                if (currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes < endTimeInMinutes) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        function getTimeSlotsForDay(dayOfWeek, item) {
+            switch(dayOfWeek) {
+                case 0: // 星期日
+                    return [
+                        { start: item.card_7_1, end: item.card_7_2 },
+                        { start: item.card_7_3, end: item.card_7_4 }
+                    ];
+                case 1: // 星期一
+                    return [
+                        { start: item.card_1_1, end: item.card_1_2 },
+                        { start: item.card_1_3, end: item.card_1_4 }
+                    ];
+                case 2: // 星期二
+                    return [
+                        { start: item.card_2_1, end: item.card_2_2 },
+                        { start: item.card_2_3, end: item.card_2_4 }
+                    ];
+                case 3: // 星期三
+                    return [
+                        { start: item.card_3_1, end: item.card_3_2 },
+                        { start: item.card_3_3, end: item.card_3_4 }
+                    ];
+                case 4: // 星期四
+                    return [
+                        { start: item.card_4_1, end: item.card_4_2 },
+                        { start: item.card_4_3, end: item.card_4_4 }
+                    ];
+                case 5: // 星期五
+                    return [
+                        { start: item.card_5_1, end: item.card_5_2 },
+                        { start: item.card_5_3, end: item.card_5_4 }
+                    ];
+                case 6: // 星期六
+                    return [
+                        { start: item.card_6_1, end: item.card_6_2 },
+                        { start: item.card_6_3, end: item.card_6_4 }
+                    ];
+                default:
+                    return [];
+            }
+        }  
         function new_marker(){
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理 JSON 数据
             .then(data => {
-                data.forEach(item => {
+                
+                const openData = data.filter(isOpen);
+                openData.forEach(item => {
+
                     // 地址
                     var address = item.card_address;
                     // 使用 Geocoding API 将地址转换为经纬度
