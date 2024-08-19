@@ -42,8 +42,6 @@
                             聯絡我 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="https://www.instagram.com/howard.2001?utm_source=qr">Instagram</a></li>
-                            <li><a class="dropdown-item" href="https://www.facebook.com/profile.php?id=100003103171019">Facebook</a></li>
                             <li><a class="dropdown-item" href="https://github.com/hiapples">Github</a></li>
                         </ul>
                     </li>
