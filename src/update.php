@@ -1,8 +1,8 @@
 <?php
     $servername = "sql12.freesqldatabase.com"; 
-    $username = "sql12726340"; 
-    $password = "NYYVTRlGwk"; 
-    $dbname = "sql12726340"; 
+    $username = "sql12727390"; 
+    $password = "VUTkBwMGu3"; 
+    $dbname = "sql12727390"; 
 
 
     // 创建连接
