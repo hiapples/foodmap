@@ -12,23 +12,6 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // 檢查 card_title 是否重複
-    $card_title = $_POST['card-title'];
-    $check_sql = "SELECT id FROM shop_info WHERE card_title = ?";
-    $stmt_check = $conn->prepare($check_sql);
-    $stmt_check->bind_param("s", $card_title);
-    $stmt_check->execute();
-    $stmt_check->store_result();
-
-    if ($stmt_check->num_rows > 0) {
-        echo json_encode(['success' => false, 'error' => 'duplicate_title']);
-        $stmt_check->close();
-        $conn->close();
-        exit();
-    }
-
-    $stmt_check->close();
-
     // 創建資料表（如果不存在）
     $sql = "CREATE TABLE IF NOT EXISTS shop_info (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,6 +56,22 @@
         die("Error creating table: " . $conn->error);
     }
 
+    // 檢查 card_title 是否重複
+    $card_title = $_POST['card-title'];
+    $check_sql = "SELECT id FROM shop_info WHERE card_title = ?";
+    $stmt_check = $conn->prepare($check_sql);
+    $stmt_check->bind_param("s", $card_title);
+    $stmt_check->execute();
+    $stmt_check->store_result();
+
+    if ($stmt_check->num_rows > 0) {
+        echo json_encode(['success' => false, 'error' => 'duplicate_title']);
+        $stmt_check->close();
+        $conn->close();
+        exit();
+    }
+
+    $stmt_check->close();
     // 準備 SQL 語句並綁定參數
     $stmt = $conn->prepare("INSERT INTO shop_info (
         card_title, 
