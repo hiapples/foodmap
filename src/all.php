@@ -234,6 +234,11 @@
                 const [startHour, startMinute] = slot.start.split(':').map(Number);
                 let [endHour, endMinute] = slot.end.split(':').map(Number);
 
+                // Handle 24-hour business case (00:00 ~ 00:00)
+                if (slot.start === "00:00" && slot.end === "00:00") {
+                    return true;
+                }
+
                 const startTimeInMinutes = startHour * 60 + startMinute;
                 let endTimeInMinutes = endHour * 60 + endMinute;
 
