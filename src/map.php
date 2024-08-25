@@ -199,7 +199,7 @@
             }
 
             // 如果当前时间在凌晨（例如00:00到04:00），检查前一天的跨夜时间段
-            if (currentHour < 4) {
+            if (currentHour < 4 ) {
                 if (isTimeInSlots(currentTimeInMinutes + 24 * 60, timeSlotsYesterday)) {
                     return true;
                 }
@@ -213,6 +213,11 @@
 
                 const [startHour, startMinute] = slot.start.split(':').map(Number);
                 let [endHour, endMinute] = slot.end.split(':').map(Number);
+
+                // Handle 24-hour business case (00:00 ~ 00:00)
+                if (slot.start === "00:00" && slot.end === "00:00") {
+                    return true;
+                }
 
                 const startTimeInMinutes = startHour * 60 + startMinute;
                 let endTimeInMinutes = endHour * 60 + endMinute;
@@ -268,7 +273,7 @@
                 default:
                     return [];
             }
-        }  
+        } 
         function new_marker(){
             fetch('fetch-all.php')
             .then(response => response.json()) // 处理 JSON 数据
