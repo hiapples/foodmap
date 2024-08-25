@@ -503,7 +503,9 @@
                         // 如果两个时段都为空，显示“休假”，否则显示时间段
                         if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
                             document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
-                        } else {
+                        }else if(card_1==card_2){
+                            document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;全天營業`);
+                        }else {
                             document.querySelector(`#dash-time-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
                             document.querySelector(`#dash-time-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
                         }
