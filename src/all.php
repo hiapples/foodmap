@@ -396,10 +396,7 @@
                             const card_3 = item[`card_${day}_3`];
                             const card_4 = item[`card_${day}_4`];
 
-                            // 如果两个时段都为空，显示“休假”，否则显示时间段
-                            if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
-                                document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
-                            }else {
+                            if (card_1 != "" && card_2 != "" || card_3 != "" && card_4 != "") {
                                 document.querySelector(`#dash-search-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
                                 document.querySelector(`#dash-search-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
                             }
@@ -500,12 +497,7 @@
                         const card_3 = item[`card_${day}_3`];
                         const card_4 = item[`card_${day}_4`];
 
-                        // 如果两个时段都为空，显示“休假”，否则显示时间段
-                        if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
-                            document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
-                        }else if(card_1==card_2){
-                            document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;全天營業`);
-                        }else {
+                        if (card_1 != "" && card_2 != "" || card_3 != "" && card_4 != "") {
                             document.querySelector(`#dash-time-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
                             document.querySelector(`#dash-time-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
                         }
@@ -604,10 +596,7 @@
                         const card_3 = item[`card_${day}_3`];
                         const card_4 = item[`card_${day}_4`];
 
-                        // 如果两个时段都为空，显示“休假”，否则显示时间段
-                        if (card_1 === "" && card_2 === "" && card_3 === "" && card_4 === "") {
-                            document.querySelector(`.card-text`).innerHTML = document.querySelector(`.card-text`).innerHTML.replace(`星期${day}&ensp;`, `星期${day}&ensp;休假`);
-                        }else {
+                        if (card_1 != "" && card_2 != "" || card_3 != "" && card_4 != "") {
                             document.querySelector(`#dash-insert-${item.id}-${day}-1`).style.display = card_1 === "" ? "none" : "inline";
                             document.querySelector(`#dash-insert-${item.id}-${day}-3`).style.display = card_3 === "" ? "none" : "inline";
                         }
