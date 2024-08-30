@@ -349,7 +349,7 @@
                         const titleId = `card-title-search-${id}`; // 为每个title设置唯一的id
 
                         all += 
-                        "<div class='col-md-6'>"+
+                        "<div class='col-lg-6'>"+
                             "<div class='card mt-3'>"+
                                 "<div class='card-body'>"+
                                     "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
@@ -455,7 +455,7 @@
                     const titleId = `card-title-time-${id}`; // 为每个title设置唯一的id
 
                     all += 
-                    "<div class='col-md-6'>"+
+                    "<div class='col-lg-6'>"+
                         "<div class='card mt-3'>"+
                             "<div class='card-body'>"+
                                 "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
@@ -556,7 +556,7 @@
                     const titleId = `card-title-insert-${id}`; // 为每个title设置唯一的id
                     // 构建HTML内容
                     all += 
-                    "<div class='col-md-6'>"+
+                    "<div class='col-lg-6'>"+
                         "<div class='card mt-3'>"+
                             "<div class='card-body'>"+
                                 "<h5 class='card-title' id='" + titleId + "'>" + item.card_title + "</h5>" +
